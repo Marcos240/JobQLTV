@@ -22,6 +22,7 @@ namespace LibraryManagement.Models
         public string accountStaff { get; set; }
         public string passwordStaff { get; set; }
         public int idPermission { get; set; }
+        public string nameStaffSearch { get; set; }
     
         public virtual Permission Permission { get; set; }
     }

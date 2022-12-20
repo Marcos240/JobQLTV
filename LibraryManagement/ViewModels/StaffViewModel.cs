@@ -20,6 +20,7 @@ namespace LibraryManagement.ViewModels
 
         private ObservableCollection<Permission> _Permission;
         public ObservableCollection<Permission> Permission { get => _Permission; set { _Permission = value; OnPropertyChanged(); } }
+        public Assets.Helper helper = new Assets.Helper();
 
         private Staff _SelectedItem;
 
@@ -156,7 +157,7 @@ namespace LibraryManagement.ViewModels
             try
             {
                 var result = DataAdapter.Instance.DB.Staffs.Where(
-                                    staff => staff.nameStaff.ToLower().StartsWith(StaffSearchKeyword.ToLower())
+                                    staff => staff.nameStaffSearch.ToLower().Contains(helper.RemoveSign4VietnameseString(StaffSearchKeyword.ToLower()))
                                     );
                 List = new ObservableCollection<Staff>(result);
             }
@@ -228,7 +229,8 @@ namespace LibraryManagement.ViewModels
                         phoneNumberStaff = PhoneNumberStaff,
                         accountStaff = AccountStaff,
                         passwordStaff = EncryptSHA512Managed(PasswordStaff),
-                        idPermission = SelectedPermission.idPermission
+                        idPermission = SelectedPermission.idPermission,
+                        nameStaffSearch = helper.RemoveSign4VietnameseString(NameStaff)
                     };
                     DataAdapter.Instance.DB.Staffs.Add(Staff);
                     DataAdapter.Instance.DB.SaveChanges();
@@ -258,6 +260,7 @@ namespace LibraryManagement.ViewModels
                 Staff.addressStaff = SelectedItem.addressStaff;
                 Staff.phoneNumberStaff = SelectedItem.phoneNumberStaff;
                 Staff.idPermission = SelectedItem.Permission.idPermission;
+                Staff.nameStaffSearch = helper.RemoveSign4VietnameseString(SelectedItem.nameStaff);
                 DataAdapter.Instance.DB.Staffs.AddOrUpdate(Staff);
                 DataAdapter.Instance.DB.SaveChanges();
                 System.ComponentModel.ICollectionView view = CollectionViewSource.GetDefaultView(List);

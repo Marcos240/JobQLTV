@@ -224,7 +224,15 @@
                     </ScrollViewer>
                 </materialDesign:Card>
                 <Grid Grid.Column="4" Grid.RowSpan="3">
-                    <Button Foreground="Black" FontWeight="Bold" Background="#FF47608E" Command="{Binding ReturnBook}" Content="Trả sách" VerticalAlignment="Center" Margin="30" Height="60" Width="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Button  Foreground="Black" FontWeight="Bold" Background="#FF47608E" Command="{Binding ReturnBook}" Content="Trả sách" VerticalAlignment="Center" Margin="5" Height="60" Width="150">
+
+                    </Button>
+                    <Button Grid.Row="1" Foreground="Black" FontWeight="Bold" Background="Beige" Command="{Binding ExtendBook}" Content="Gia hạn sách" VerticalAlignment="Center" Margin="5" Height="60" Width="150">
 
                     </Button>
                 </Grid>

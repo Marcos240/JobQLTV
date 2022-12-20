@@ -21,6 +21,8 @@ namespace LibraryManagement.ViewModels
         private Reader readerSelected;
         private string bookKeyword;
         private string readerKeyword;
+
+        private Assets.Helper helper = new Assets.Helper();
         public ObservableCollection<Book> ListBooksSelected { 
             get => listBooksSelected; 
             set { 
@@ -50,8 +52,8 @@ namespace LibraryManagement.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string BookKeyword { get => bookKeyword; set { bookKeyword = value; OnPropertyChanged(); InitBooks(bookKeyword); } }
-        public string ReaderKeyword { get => readerKeyword; set { readerKeyword = value; OnPropertyChanged(); InitReaders(readerKeyword); } }
+        public string BookKeyword { get => bookKeyword; set { bookKeyword = value; OnPropertyChanged(); InitBooks(helper.RemoveSign4VietnameseString(bookKeyword)); } }
+        public string ReaderKeyword { get => readerKeyword; set { readerKeyword = value; OnPropertyChanged(); InitReaders(helper.RemoveSign4VietnameseString(readerKeyword)); } }
 
         public ICommand BorrowCommand { get; set; }
         public ICommand SelectBook { get; set; }

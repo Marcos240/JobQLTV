@@ -60,7 +60,7 @@ namespace LibraryManagement.ViewModels
             try
             {
                 var ReadersInPage = DataAdapter.Instance.DB.Readers
-                    .Where(reader => reader.nameReader.ToLower().StartsWith(keyword.ToLower()))
+                    .Where(reader => reader.nameReaderSearch.ToLower().StartsWith(keyword.ToLower()))
                     .OrderBy(el => el.idReader)
                     .Skip((CurrentPage - 1) * ItemsPerPage)
                     .Take(items);

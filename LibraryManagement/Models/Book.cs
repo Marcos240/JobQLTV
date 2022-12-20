@@ -31,6 +31,7 @@ namespace LibraryManagement.Models
         public int idCategory { get; set; }
         public int idPublisher { get; set; }
         public string image { get; set; }
+        public string nameBookSearch { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Publisher Publisher { get; set; }

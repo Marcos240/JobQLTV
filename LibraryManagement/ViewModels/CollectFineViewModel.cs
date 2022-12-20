@@ -23,6 +23,7 @@ namespace LibraryManagement.ViewModels
         private Payment payment;
         private int collectedAmount;
         private string readerKeyword;
+        private Assets.Helper helper = new Assets.Helper();
         /// <summary>
         /// Fefinition of properties
         /// </summary>
@@ -59,7 +60,7 @@ namespace LibraryManagement.ViewModels
             get => collectedAmount;
             set { collectedAmount = value; calcRemainingDebt(); OnPropertyChanged(); }
         }
-        public string ReaderKeyword { get => readerKeyword; set { readerKeyword = value; OnPropertyChanged(); InitReaders(readerKeyword); } }
+        public string ReaderKeyword { get => readerKeyword; set { readerKeyword = value; OnPropertyChanged(); InitReaders(helper.RemoveSign4VietnameseString(readerKeyword)); } }
         /// <summary>
         /// Command for buttons
         /// </summary>

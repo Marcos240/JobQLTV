@@ -27,6 +27,7 @@ namespace LibraryManagement.ViewModels
         private BillReturn billReturn;
         private DateTime dateReturn;
 
+        public Assets.Helper helper = new Assets.Helper();
         public string ReaderSearchKeyword
         {
             get => readerSearchKeyword;
@@ -34,7 +35,7 @@ namespace LibraryManagement.ViewModels
             {
                 readerSearchKeyword = value;
                 OnPropertyChanged();
-                InitReaders(readerSearchKeyword);
+                InitReaders(helper.RemoveSign4VietnameseString(readerSearchKeyword));
             }
         }
         public ReaderPaginatingCollection ListReader {
@@ -76,7 +77,7 @@ namespace LibraryManagement.ViewModels
         public ICommand ReturnBook { get; set; }
         public ICommand MoveToPreviousReadersPage { get; set; }
         public ICommand MoveToNextReadersPage { get; set; }
-
+        public ICommand ExtendBook { get; set; }
 
 
 
@@ -150,7 +151,7 @@ namespace LibraryManagement.ViewModels
                                     dayBorrowed = DateTime.Now.Subtract(detailBorrow.BillBorrow.borrowDate).Days,
                                     fine = getFine(detailBorrow.BillBorrow.borrowDate, finePerExcessDay, daysBorrowAllowed)
                                 }
-                                );
+                             );
                             // Change detail borrow status
                             detailBorrow.returned = 1;
                             // Add total fine to reader's debt
@@ -158,6 +159,7 @@ namespace LibraryManagement.ViewModels
                             // Change the book status to available
                             DataAdapter.Instance.DB.Books.Find(detailBorrow.idBook).statusBook = "có sẵn";
                         }
+                        
                     }
                     catch (InvalidOperationException)
                     {
@@ -201,6 +203,100 @@ namespace LibraryManagement.ViewModels
                         RetrieveDataAndClearInput();
                         MessageBox.Show("Trả sách thành công!");
                     }
+                });
+
+            ExtendBook = new AppCommand<object>(
+                p =>
+                {
+                    if (ListDetailBorrowSelected == null || ListDetailBorrowSelected.Count == 0)
+                    {
+                        return false;
+                    }
+                    return true;
+                },
+                p =>
+                {
+                    int daysBorrowAllowed = DataAdapter.Instance.DB.Paramaters.Find(7).valueParameter;
+                    var lstDetailNotReturn = ListDetailBorrowSelected.AsEnumerable().Where(item=>DateTime.Now.Subtract(item.BillBorrow.borrowDate).Days - daysBorrowAllowed > 0).ToList();
+                    string lstBook = "";
+                    if (lstDetailNotReturn.Count>0)
+                    {
+                        lstBook = String.Join(", ", lstDetailNotReturn.AsEnumerable().Select(item => item.Book.nameBook).ToList());
+                    }
+                    var lstDetailReturn = ListDetailBorrowSelected.AsEnumerable().Where(item => DateTime.Now.Subtract(item.BillBorrow.borrowDate).Days - daysBorrowAllowed <= 0).ToList();
+                    if (lstDetailReturn.Count > 0)
+                    {
+                        BillReturn.returnDate = DateReturn;
+                        DataAdapter.Instance.DB.BillReturns.Add(BillReturn);
+                        foreach (var detailBorrow in lstDetailReturn)
+                        {
+                            // Add details of bill return to DB
+                            DataAdapter.Instance.DB.DetailBillReturns.Add(
+                                new DetailBillReturn
+                                {
+                                    idBook = detailBorrow.idBook,
+                                    idBillReturn = BillReturn.idBillReturn,
+                                    idBillBorrow = detailBorrow.idBillBorrow,
+                                    dayBorrowed = DateTime.Now.Subtract(detailBorrow.BillBorrow.borrowDate).Days,
+                                    fine = 0
+                                }
+                             );
+                            // Change detail borrow status
+                            detailBorrow.returned = 1;
+                            // Add total fine to reader's debt
+                            DataAdapter.Instance.DB.Readers.Find(BillReturn.idReader).debt += BillReturn.sumFine;
+                        }
+
+                        var borrow = new BillBorrow { borrowDate = DateTime.Now, idReader = ReaderSelected.idReader };
+                        DataAdapter.Instance.DB.BillBorrows.Add(borrow);
+                        foreach (var book in lstDetailReturn)
+                        {
+                            var detailBorrow = new DetailBillBorrow { idBillBorrow = borrow.idBillBorrow, idBook = book.idBook, returned = 0 };
+                            DataAdapter.Instance.DB.DetailBillBorrows.Add(detailBorrow);
+                            // Change book state
+                            DataAdapter.Instance.DB.Books.Find(book.idBook).statusBook = "đã mượn";
+                        }
+                    }
+                    try
+                    {
+                        // Save DB state
+                        DataAdapter.Instance.DB.SaveChanges();
+                    }
+                    catch (DbUpdateException)
+                    {
+                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
+                    }
+                    catch (DbEntityValidationException)
+                    {
+                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
+                    }
+                    catch (NotSupportedException)
+                    {
+                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
+                    }
+                    finally
+                    {
+                        // Clear UI
+                        BillReturn = new BillReturn { sumFine = 0 };
+                        DateReturn = DateTime.Now;
+                        RetrieveDetailBorrow();
+                        ListDetailBorrowSelected = new ObservableCollection<DetailBillBorrow>();
+                        if (!String.IsNullOrEmpty(lstBook))
+                        MessageBox.Show($"Gia hạn sách thành công ! {lstBook} đá quá thời gian mượn sách, vui lòng trả sách ");
+                        else
+                        {
+                            MessageBox.Show($"Gia hạn sách thành công");
+                        }
+                    }
+
                 });
             MoveToPreviousReadersPage = new AppCommand<object>(
                p =>

@@ -61,7 +61,7 @@ namespace LibraryManagement.ViewModels
             try
             {
                 var BooksInpage = DataAdapter.Instance.DB.Books
-                    .Where(book => book.nameBook.ToLower().StartsWith(this.keyword.ToLower()))
+                    .Where(book => book.nameBookSearch.ToLower().Contains(this.keyword.ToLower()))
                     .OrderBy(el => el.idBook)
                     .Skip((CurrentPage - 1) * ItemsPerPage)
                     .Take(items);

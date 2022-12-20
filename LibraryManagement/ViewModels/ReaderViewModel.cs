@@ -28,6 +28,9 @@ namespace LibraryManagement.ViewModels
 
         private ObservableCollection<TypeReader> _TypeReader;
         public ObservableCollection<TypeReader> TypeReader { get => _TypeReader; set { _TypeReader = value; OnPropertyChanged(); } }
+
+        public Assets.Helper helper = new Assets.Helper();
+
         private Reader _SelectedItem;
         public Reader SelectedItem
         {
@@ -101,7 +104,7 @@ namespace LibraryManagement.ViewModels
             {
                 readerSearchKeyword = value;
                 OnPropertyChanged();
-                InitReaders(readerSearchKeyword);
+                InitReaders(helper.RemoveSign4VietnameseString (readerSearchKeyword));
             }
         }
 
@@ -176,7 +179,8 @@ namespace LibraryManagement.ViewModels
                         createdAt = DateTime.Today,
                         latestExtended = (DateTime)CreatedAt,
                         debt = 0,
-                        idTypeReader = SelectedTypeReader.idTypeReader
+                        idTypeReader = SelectedTypeReader.idTypeReader,
+                        nameReaderSearch = helper.RemoveSign4VietnameseString(NameReader)
                     };
                     DataAdapter.Instance.DB.Readers.Add(Reader);
                     DataAdapter.Instance.DB.SaveChanges();
@@ -207,6 +211,7 @@ namespace LibraryManagement.ViewModels
                 Reader.debt = SelectedItem.debt;
                 Reader.createdAt = (DateTime)SelectedItem.createdAt;
                 Reader.idTypeReader = SelectedItem.TypeReader.idTypeReader;
+                Reader.nameReaderSearch = helper.RemoveSign4VietnameseString(SelectedItem.nameReader);
                 DataAdapter.Instance.DB.SaveChanges();
                 List.Refresh();
                 OnPropertyChanged("SelectedItem");

@@ -30,6 +30,7 @@ namespace LibraryManagement.ViewModels
 
         private ObservableCollection<Author> _ListAuthors;
         public ObservableCollection<Author> ListAuthors { get => _ListAuthors; set { _ListAuthors = value; OnPropertyChanged(); } }
+        public Assets.Helper helper = new Assets.Helper();
 
         //Selected data of DB
         private Book _SelectedItem;
@@ -129,7 +130,7 @@ namespace LibraryManagement.ViewModels
             {
                 bookSearchKeyword = value;
                 OnPropertyChanged();
-                InitBooks(bookSearchKeyword);
+                InitBooks(helper.RemoveSign4VietnameseString(bookSearchKeyword));
             }
         }
 
@@ -270,7 +271,8 @@ namespace LibraryManagement.ViewModels
                     idCategory = SelectedCategory.idCategory,
                     idPublisher = SelectedPublisher.idPublisher,
                     statusBook = "có sẵn",
-                    image = SourceImageFile != null ? newFileName : "default-image.png"
+                    image = SourceImageFile != null ? newFileName : "default-image.png",
+                    nameBookSearch = helper.RemoveSign4VietnameseString(nameBook)
                 };
 
                 for (int i = 0; i < ListAuthors.Count; i++)
@@ -323,6 +325,7 @@ namespace LibraryManagement.ViewModels
                 book.idCategory = SelectedItem.Category.idCategory;
                 book.idPublisher = SelectedItem.Publisher.idPublisher;
                 book.image = SourceImageFile != null ? newFileName : book.image;
+                book.nameBookSearch =  helper.RemoveSign4VietnameseString(SelectedItem.nameBook);
                 // Save authors
                 book.Authors.Clear();
                 foreach (var author in ListAuthors)
