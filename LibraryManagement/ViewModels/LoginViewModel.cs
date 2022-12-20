@@ -130,6 +130,8 @@ namespace LibraryManagement.ViewModels
         public LoginViewModel()
         {
             RetrieveData();
+            AccountStaff = "admin";
+            PasswordStaff= "abcd1234";
             LoginCommand = new AppCommand<object>((p) =>
             {
                 if (PasswordStaff == null || AccountStaff == null)

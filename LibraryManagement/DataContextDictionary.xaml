@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:LibraryManagement"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:viewmodel="clr-namespace:LibraryManagement.ViewModels">
     <!-- ViewModel -->
     <viewmodel:SampleViewModel x:Key="SampleViewModel"/>
@@ -32,6 +33,45 @@
     <viewmodel:ListToVisibility x:Key="ListToVisibility"/>
     <viewmodel:PermissonToBoolean x:Key="PermissonToBoolean"/>
     <viewmodel:PermissonToVisibility x:Key="PermissonToVisibility"/>
+
+    <!-- Tab -->
+    <Style TargetType="controls:MetroTabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:MetroTabItem">
+                    <Border Name="Border">
+                        <ContentPresenter x:Name="ContentSite"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          ContentSource="Header"
+                                          Margin="20,2" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected"
+                                 Value="True">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush"
+                                    Value="#FF1585B5" />
+                            <Setter TargetName="Border"
+                                    Property="BorderThickness"
+                                    Value="0,0,0,3" />
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="#FFAEAEBD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontWeight"
+                Value="DemiBold" />
+        <Setter Property="Foreground"
+                Value="Black" />
+        <Setter Property="FontSize"
+                Value="15" />
+    </Style>
 
 
 
