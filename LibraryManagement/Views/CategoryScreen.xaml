@@ -1,0 +1,43 @@
+﻿<Window x:Class="LibraryManagement.Views.CategoryScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+                  Background="#FFBFD4FF"
+        mc:Ignorable="d"
+         ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow"
+        DataContext="{StaticResource CategoryViewModel}"
+        Title="Danh sách thể loại sách" Height="550" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=" 4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Grid.Row="0" Margin="10">
+            <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" VerticalScrollBarVisibility="Auto">
+                <ListView Grid.Row="0" ItemsSource="{Binding ListCategory}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã thể loại" DisplayMemberBinding="{Binding idCategory}"></GridViewColumn>
+                            <GridViewColumn Header="Tên thể loại" DisplayMemberBinding="{Binding nameCategory}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </materialDesign:Card>
+        <Grid Grid.Row="1">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Foreground="Black" Background="#FF00BB9A" Grid.Column="0" Height="40" Width="150" Command="{Binding AddCategoryCommand}" HorizontalContentAlignment="Center" Margin="10" Content="Thêm mới" HorizontalAlignment="Center"></Button>
+                <Button Foreground="Black" Background="#f44336" Grid.Column="1" Height="40" Width="150" Command="{Binding DeleteCategorytoDBCommand}" HorizontalContentAlignment="Center" Margin="10" Content="Xóa" HorizontalAlignment="Center"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,951 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LibraryManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="idAuthor" />
+          </Key>
+          <Property Name="idAuthor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameAuthor" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BillBorrow">
+          <Key>
+            <PropertyRef Name="idBillBorrow" />
+          </Key>
+          <Property Name="idBillBorrow" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="borrowDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="idReader" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BillReturn">
+          <Key>
+            <PropertyRef Name="idBillReturn" />
+          </Key>
+          <Property Name="idBillReturn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="returnDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="idReader" Type="int" Nullable="false" />
+          <Property Name="sumFine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="idBook" />
+          </Key>
+          <Property Name="idBook" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameBook" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="dateManufacture" Type="smalldatetime" Nullable="false" />
+          <Property Name="dateAddBook" Type="smalldatetime" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="statusBook" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="idCategory" Type="int" Nullable="false" />
+          <Property Name="idPublisher" Type="int" Nullable="false" />
+          <Property Name="image" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameCategory" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Compose">
+          <Key>
+            <PropertyRef Name="idAuthor" />
+            <PropertyRef Name="idBook" />
+          </Key>
+          <Property Name="idAuthor" Type="int" Nullable="false" />
+          <Property Name="idBook" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetailBillBorrow">
+          <Key>
+            <PropertyRef Name="idDetailBillBorrow" />
+          </Key>
+          <Property Name="idDetailBillBorrow" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idBook" Type="int" Nullable="false" />
+          <Property Name="idBillBorrow" Type="int" Nullable="false" />
+          <Property Name="returned" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetailBillReturn">
+          <Key>
+            <PropertyRef Name="idDetailBillReturn" />
+          </Key>
+          <Property Name="idDetailBillReturn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idBook" Type="int" Nullable="false" />
+          <Property Name="idBillReturn" Type="int" Nullable="false" />
+          <Property Name="idBillBorrow" Type="int" Nullable="false" />
+          <Property Name="dayBorrowed" Type="int" Nullable="false" />
+          <Property Name="fine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Paramater">
+          <Key>
+            <PropertyRef Name="idParameter" />
+          </Key>
+          <Property Name="idParameter" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameParameter" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="valueParameter" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="idPayment" />
+          </Key>
+          <Property Name="idPayment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idReader" Type="int" Nullable="false" />
+          <Property Name="currentDebt" Type="int" Nullable="false" />
+          <Property Name="collectedAmount" Type="int" Nullable="false" />
+          <Property Name="remainDebt" Type="int" Nullable="false" />
+          <Property Name="paymentDate" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="idPermission" />
+          </Key>
+          <Property Name="idPermission" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="namePermission" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publisher">
+          <Key>
+            <PropertyRef Name="idPublisher" />
+          </Key>
+          <Property Name="idPublisher" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="namePublisher" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reader">
+          <Key>
+            <PropertyRef Name="idReader" />
+          </Key>
+          <Property Name="idReader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameReader" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="dobReader" Type="smalldatetime" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="addressReader" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="createdAt" Type="smalldatetime" Nullable="false" />
+          <Property Name="debt" Type="int" Nullable="false" />
+          <Property Name="latestExtended" Type="smalldatetime" Nullable="false" />
+          <Property Name="idTypeReader" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="idStaff" />
+          </Key>
+          <Property Name="idStaff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameStaff" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="dobStaff" Type="smalldatetime" Nullable="false" />
+          <Property Name="addressStaff" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="phoneNumberStaff" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="accountStaff" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="passwordStaff" Type="varchar(max)" Nullable="false" />
+          <Property Name="idPermission" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeReader">
+          <Key>
+            <PropertyRef Name="idTypeReader" />
+          </Key>
+          <Property Name="idTypeReader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameTypeReader" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BillBorro__idRea__33D4B598">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="BillBorrow" Type="Self.BillBorrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="idReader" />
+            </Principal>
+            <Dependent Role="BillBorrow">
+              <PropertyRef Name="idReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BillRetur__idRea__37A5467C">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="BillReturn" Type="Self.BillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="idReader" />
+            </Principal>
+            <Dependent Role="BillReturn">
+              <PropertyRef Name="idReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book__idCategory__2D27B809">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="idCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book__idPublishe__2E1BDC42">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="idPublisher" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="idPublisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Compose__idAutho__300424B4">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="Compose" Type="Self.Compose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="idAuthor" />
+            </Principal>
+            <Dependent Role="Compose">
+              <PropertyRef Name="idAuthor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Compose__idBook__2F10007B">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Compose" Type="Self.Compose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="Compose">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBil__32E0915F">
+          <End Role="BillBorrow" Type="Self.BillBorrow" Multiplicity="1" />
+          <End Role="DetailBillBorrow" Type="Self.DetailBillBorrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillBorrow">
+              <PropertyRef Name="idBillBorrow" />
+            </Principal>
+            <Dependent Role="DetailBillBorrow">
+              <PropertyRef Name="idBillBorrow" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBil__35BCFE0A">
+          <End Role="BillReturn" Type="Self.BillReturn" Multiplicity="1" />
+          <End Role="DetailBillReturn" Type="Self.DetailBillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillReturn">
+              <PropertyRef Name="idBillReturn" />
+            </Principal>
+            <Dependent Role="DetailBillReturn">
+              <PropertyRef Name="idBillReturn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBil__36B12243">
+          <End Role="BillBorrow" Type="Self.BillBorrow" Multiplicity="1" />
+          <End Role="DetailBillReturn" Type="Self.DetailBillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillBorrow">
+              <PropertyRef Name="idBillBorrow" />
+            </Principal>
+            <Dependent Role="DetailBillReturn">
+              <PropertyRef Name="idBillBorrow" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBoo__31EC6D26">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="DetailBillBorrow" Type="Self.DetailBillBorrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="DetailBillBorrow">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBoo__34C8D9D1">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="DetailBillReturn" Type="Self.DetailBillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="DetailBillReturn">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__idReade__38996AB5">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="idReader" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="idReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reader__idTypeRe__2C3393D0">
+          <End Role="TypeReader" Type="Self.TypeReader" Multiplicity="1" />
+          <End Role="Reader" Type="Self.Reader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeReader">
+              <PropertyRef Name="idTypeReader" />
+            </Principal>
+            <Dependent Role="Reader">
+              <PropertyRef Name="idTypeReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Staff__idPermiss__30F848ED">
+          <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="idPermission" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="idPermission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryManagementModelStoreContainer">
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillBorrow" EntityType="Self.BillBorrow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillReturn" EntityType="Self.BillReturn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compose" EntityType="Self.Compose" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailBillBorrow" EntityType="Self.DetailBillBorrow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailBillReturn" EntityType="Self.DetailBillReturn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paramater" EntityType="Self.Paramater" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publisher" EntityType="Self.Publisher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reader" EntityType="Self.Reader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeReader" EntityType="Self.TypeReader" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BillBorro__idRea__33D4B598" Association="Self.FK__BillBorro__idRea__33D4B598">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="BillBorrow" EntitySet="BillBorrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BillRetur__idRea__37A5467C" Association="Self.FK__BillRetur__idRea__37A5467C">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="BillReturn" EntitySet="BillReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Book__idCategory__2D27B809" Association="Self.FK__Book__idCategory__2D27B809">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Book__idPublishe__2E1BDC42" Association="Self.FK__Book__idPublishe__2E1BDC42">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Compose__idAutho__300424B4" Association="Self.FK__Compose__idAutho__300424B4">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Compose" EntitySet="Compose" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Compose__idBook__2F10007B" Association="Self.FK__Compose__idBook__2F10007B">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Compose" EntitySet="Compose" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBil__32E0915F" Association="Self.FK__DetailBil__idBil__32E0915F">
+            <End Role="BillBorrow" EntitySet="BillBorrow" />
+            <End Role="DetailBillBorrow" EntitySet="DetailBillBorrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBil__35BCFE0A" Association="Self.FK__DetailBil__idBil__35BCFE0A">
+            <End Role="BillReturn" EntitySet="BillReturn" />
+            <End Role="DetailBillReturn" EntitySet="DetailBillReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBil__36B12243" Association="Self.FK__DetailBil__idBil__36B12243">
+            <End Role="BillBorrow" EntitySet="BillBorrow" />
+            <End Role="DetailBillReturn" EntitySet="DetailBillReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBoo__31EC6D26" Association="Self.FK__DetailBil__idBoo__31EC6D26">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="DetailBillBorrow" EntitySet="DetailBillBorrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBoo__34C8D9D1" Association="Self.FK__DetailBil__idBoo__34C8D9D1">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="DetailBillReturn" EntitySet="DetailBillReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__idReade__38996AB5" Association="Self.FK__Payment__idReade__38996AB5">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reader__idTypeRe__2C3393D0" Association="Self.FK__Reader__idTypeRe__2C3393D0">
+            <End Role="TypeReader" EntitySet="TypeReader" />
+            <End Role="Reader" EntitySet="Reader" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Staff__idPermiss__30F848ED" Association="Self.FK__Staff__idPermiss__30F848ED">
+            <End Role="Permission" EntitySet="Permission" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibraryManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="idAuthor" />
+          </Key>
+          <Property Name="idAuthor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameAuthor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.Compose" FromRole="Author" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="BillBorrow">
+          <Key>
+            <PropertyRef Name="idBillBorrow" />
+          </Key>
+          <Property Name="idBillBorrow" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="borrowDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idReader" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK__BillBorro__idRea__33D4B598" FromRole="BillBorrow" ToRole="Reader" />
+          <NavigationProperty Name="DetailBillBorrows" Relationship="Self.FK__DetailBil__idBil__32E0915F" FromRole="BillBorrow" ToRole="DetailBillBorrow" />
+          <NavigationProperty Name="DetailBillReturns" Relationship="Self.FK__DetailBil__idBil__36B12243" FromRole="BillBorrow" ToRole="DetailBillReturn" />
+        </EntityType>
+        <EntityType Name="BillReturn">
+          <Key>
+            <PropertyRef Name="idBillReturn" />
+          </Key>
+          <Property Name="idBillReturn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="returnDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idReader" Type="Int32" Nullable="false" />
+          <Property Name="sumFine" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK__BillRetur__idRea__37A5467C" FromRole="BillReturn" ToRole="Reader" />
+          <NavigationProperty Name="DetailBillReturns" Relationship="Self.FK__DetailBil__idBil__35BCFE0A" FromRole="BillReturn" ToRole="DetailBillReturn" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="idBook" />
+          </Key>
+          <Property Name="idBook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameBook" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateManufacture" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateAddBook" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="statusBook" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idCategory" Type="Int32" Nullable="false" />
+          <Property Name="idPublisher" Type="Int32" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Book__idCategory__2D27B809" FromRole="Book" ToRole="Category" />
+          <NavigationProperty Name="Publisher" Relationship="Self.FK__Book__idPublishe__2E1BDC42" FromRole="Book" ToRole="Publisher" />
+          <NavigationProperty Name="DetailBillBorrows" Relationship="Self.FK__DetailBil__idBoo__31EC6D26" FromRole="Book" ToRole="DetailBillBorrow" />
+          <NavigationProperty Name="DetailBillReturns" Relationship="Self.FK__DetailBil__idBoo__34C8D9D1" FromRole="Book" ToRole="DetailBillReturn" />
+          <NavigationProperty Name="Authors" Relationship="Self.Compose" FromRole="Book" ToRole="Author" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Book__idCategory__2D27B809" FromRole="Category" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="DetailBillBorrow">
+          <Key>
+            <PropertyRef Name="idDetailBillBorrow" />
+          </Key>
+          <Property Name="idDetailBillBorrow" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idBook" Type="Int32" Nullable="false" />
+          <Property Name="idBillBorrow" Type="Int32" Nullable="false" />
+          <Property Name="returned" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BillBorrow" Relationship="Self.FK__DetailBil__idBil__32E0915F" FromRole="DetailBillBorrow" ToRole="BillBorrow" />
+          <NavigationProperty Name="Book" Relationship="Self.FK__DetailBil__idBoo__31EC6D26" FromRole="DetailBillBorrow" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="DetailBillReturn">
+          <Key>
+            <PropertyRef Name="idDetailBillReturn" />
+          </Key>
+          <Property Name="idDetailBillReturn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idBook" Type="Int32" Nullable="false" />
+          <Property Name="idBillReturn" Type="Int32" Nullable="false" />
+          <Property Name="idBillBorrow" Type="Int32" Nullable="false" />
+          <Property Name="dayBorrowed" Type="Int32" Nullable="false" />
+          <Property Name="fine" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BillBorrow" Relationship="Self.FK__DetailBil__idBil__36B12243" FromRole="DetailBillReturn" ToRole="BillBorrow" />
+          <NavigationProperty Name="BillReturn" Relationship="Self.FK__DetailBil__idBil__35BCFE0A" FromRole="DetailBillReturn" ToRole="BillReturn" />
+          <NavigationProperty Name="Book" Relationship="Self.FK__DetailBil__idBoo__34C8D9D1" FromRole="DetailBillReturn" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Paramater">
+          <Key>
+            <PropertyRef Name="idParameter" />
+          </Key>
+          <Property Name="idParameter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameParameter" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="valueParameter" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="idPayment" />
+          </Key>
+          <Property Name="idPayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idReader" Type="Int32" Nullable="false" />
+          <Property Name="currentDebt" Type="Int32" Nullable="false" />
+          <Property Name="collectedAmount" Type="Int32" Nullable="false" />
+          <Property Name="remainDebt" Type="Int32" Nullable="false" />
+          <Property Name="paymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK__Payment__idReade__38996AB5" FromRole="Payment" ToRole="Reader" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="idPermission" />
+          </Key>
+          <Property Name="idPermission" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="namePermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK__Staff__idPermiss__30F848ED" FromRole="Permission" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Publisher">
+          <Key>
+            <PropertyRef Name="idPublisher" />
+          </Key>
+          <Property Name="idPublisher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="namePublisher" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Book__idPublishe__2E1BDC42" FromRole="Publisher" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Reader">
+          <Key>
+            <PropertyRef Name="idReader" />
+          </Key>
+          <Property Name="idReader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameReader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dobReader" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="addressReader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="debt" Type="Int32" Nullable="false" />
+          <Property Name="latestExtended" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idTypeReader" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BillBorrows" Relationship="Self.FK__BillBorro__idRea__33D4B598" FromRole="Reader" ToRole="BillBorrow" />
+          <NavigationProperty Name="BillReturns" Relationship="Self.FK__BillRetur__idRea__37A5467C" FromRole="Reader" ToRole="BillReturn" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payment__idReade__38996AB5" FromRole="Reader" ToRole="Payment" />
+          <NavigationProperty Name="TypeReader" Relationship="Self.FK__Reader__idTypeRe__2C3393D0" FromRole="Reader" ToRole="TypeReader" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="idStaff" />
+          </Key>
+          <Property Name="idStaff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameStaff" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dobStaff" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="addressStaff" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNumberStaff" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="accountStaff" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passwordStaff" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idPermission" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Permission" Relationship="Self.FK__Staff__idPermiss__30F848ED" FromRole="Staff" ToRole="Permission" />
+        </EntityType>
+        <EntityType Name="TypeReader">
+          <Key>
+            <PropertyRef Name="idTypeReader" />
+          </Key>
+          <Property Name="idTypeReader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameTypeReader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Readers" Relationship="Self.FK__Reader__idTypeRe__2C3393D0" FromRole="TypeReader" ToRole="Reader" />
+        </EntityType>
+        <Association Name="FK__BillBorro__idRea__33D4B598">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="BillBorrow" Type="Self.BillBorrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="idReader" />
+            </Principal>
+            <Dependent Role="BillBorrow">
+              <PropertyRef Name="idReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBil__32E0915F">
+          <End Role="BillBorrow" Type="Self.BillBorrow" Multiplicity="1" />
+          <End Role="DetailBillBorrow" Type="Self.DetailBillBorrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillBorrow">
+              <PropertyRef Name="idBillBorrow" />
+            </Principal>
+            <Dependent Role="DetailBillBorrow">
+              <PropertyRef Name="idBillBorrow" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBil__36B12243">
+          <End Role="BillBorrow" Type="Self.BillBorrow" Multiplicity="1" />
+          <End Role="DetailBillReturn" Type="Self.DetailBillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillBorrow">
+              <PropertyRef Name="idBillBorrow" />
+            </Principal>
+            <Dependent Role="DetailBillReturn">
+              <PropertyRef Name="idBillBorrow" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BillRetur__idRea__37A5467C">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="BillReturn" Type="Self.BillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="idReader" />
+            </Principal>
+            <Dependent Role="BillReturn">
+              <PropertyRef Name="idReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBil__35BCFE0A">
+          <End Role="BillReturn" Type="Self.BillReturn" Multiplicity="1" />
+          <End Role="DetailBillReturn" Type="Self.DetailBillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillReturn">
+              <PropertyRef Name="idBillReturn" />
+            </Principal>
+            <Dependent Role="DetailBillReturn">
+              <PropertyRef Name="idBillReturn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book__idCategory__2D27B809">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="idCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Book__idPublishe__2E1BDC42">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="idPublisher" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="idPublisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBoo__31EC6D26">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="DetailBillBorrow" Type="Self.DetailBillBorrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="DetailBillBorrow">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailBil__idBoo__34C8D9D1">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="DetailBillReturn" Type="Self.DetailBillReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="DetailBillReturn">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__idReade__38996AB5">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="idReader" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="idReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Staff__idPermiss__30F848ED">
+          <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="idPermission" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="idPermission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reader__idTypeRe__2C3393D0">
+          <End Role="TypeReader" Type="Self.TypeReader" Multiplicity="1" />
+          <End Role="Reader" Type="Self.Reader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeReader">
+              <PropertyRef Name="idTypeReader" />
+            </Principal>
+            <Dependent Role="Reader">
+              <PropertyRef Name="idTypeReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Compose">
+          <End Role="Author" Type="Self.Author" Multiplicity="*" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="LibraryManagementEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Self.Author" />
+          <EntitySet Name="BillBorrows" EntityType="Self.BillBorrow" />
+          <EntitySet Name="BillReturns" EntityType="Self.BillReturn" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="DetailBillBorrows" EntityType="Self.DetailBillBorrow" />
+          <EntitySet Name="DetailBillReturns" EntityType="Self.DetailBillReturn" />
+          <EntitySet Name="Paramaters" EntityType="Self.Paramater" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Permissions" EntityType="Self.Permission" />
+          <EntitySet Name="Publishers" EntityType="Self.Publisher" />
+          <EntitySet Name="Readers" EntityType="Self.Reader" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="TypeReaders" EntityType="Self.TypeReader" />
+          <AssociationSet Name="FK__BillBorro__idRea__33D4B598" Association="Self.FK__BillBorro__idRea__33D4B598">
+            <End Role="Reader" EntitySet="Readers" />
+            <End Role="BillBorrow" EntitySet="BillBorrows" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBil__32E0915F" Association="Self.FK__DetailBil__idBil__32E0915F">
+            <End Role="BillBorrow" EntitySet="BillBorrows" />
+            <End Role="DetailBillBorrow" EntitySet="DetailBillBorrows" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBil__36B12243" Association="Self.FK__DetailBil__idBil__36B12243">
+            <End Role="BillBorrow" EntitySet="BillBorrows" />
+            <End Role="DetailBillReturn" EntitySet="DetailBillReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BillRetur__idRea__37A5467C" Association="Self.FK__BillRetur__idRea__37A5467C">
+            <End Role="Reader" EntitySet="Readers" />
+            <End Role="BillReturn" EntitySet="BillReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBil__35BCFE0A" Association="Self.FK__DetailBil__idBil__35BCFE0A">
+            <End Role="BillReturn" EntitySet="BillReturns" />
+            <End Role="DetailBillReturn" EntitySet="DetailBillReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Book__idCategory__2D27B809" Association="Self.FK__Book__idCategory__2D27B809">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Book__idPublishe__2E1BDC42" Association="Self.FK__Book__idPublishe__2E1BDC42">
+            <End Role="Publisher" EntitySet="Publishers" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBoo__31EC6D26" Association="Self.FK__DetailBil__idBoo__31EC6D26">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="DetailBillBorrow" EntitySet="DetailBillBorrows" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailBil__idBoo__34C8D9D1" Association="Self.FK__DetailBil__idBoo__34C8D9D1">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="DetailBillReturn" EntitySet="DetailBillReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__idReade__38996AB5" Association="Self.FK__Payment__idReade__38996AB5">
+            <End Role="Reader" EntitySet="Readers" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Staff__idPermiss__30F848ED" Association="Self.FK__Staff__idPermiss__30F848ED">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reader__idTypeRe__2C3393D0" Association="Self.FK__Reader__idTypeRe__2C3393D0">
+            <End Role="TypeReader" EntitySet="TypeReaders" />
+            <End Role="Reader" EntitySet="Readers" />
+          </AssociationSet>
+          <AssociationSet Name="Compose" Association="Self.Compose">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LibraryManagementModelStoreContainer" CdmEntityContainer="LibraryManagementEntities1">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="idAuthor" ColumnName="idAuthor" />
+                <ScalarProperty Name="nameAuthor" ColumnName="nameAuthor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillBorrows">
+            <EntityTypeMapping TypeName="LibraryManagementModel.BillBorrow">
+              <MappingFragment StoreEntitySet="BillBorrow">
+                <ScalarProperty Name="idBillBorrow" ColumnName="idBillBorrow" />
+                <ScalarProperty Name="borrowDate" ColumnName="borrowDate" />
+                <ScalarProperty Name="idReader" ColumnName="idReader" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillReturns">
+            <EntityTypeMapping TypeName="LibraryManagementModel.BillReturn">
+              <MappingFragment StoreEntitySet="BillReturn">
+                <ScalarProperty Name="idBillReturn" ColumnName="idBillReturn" />
+                <ScalarProperty Name="returnDate" ColumnName="returnDate" />
+                <ScalarProperty Name="idReader" ColumnName="idReader" />
+                <ScalarProperty Name="sumFine" ColumnName="sumFine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+                <ScalarProperty Name="nameBook" ColumnName="nameBook" />
+                <ScalarProperty Name="dateManufacture" ColumnName="dateManufacture" />
+                <ScalarProperty Name="dateAddBook" ColumnName="dateAddBook" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="statusBook" ColumnName="statusBook" />
+                <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+                <ScalarProperty Name="idPublisher" ColumnName="idPublisher" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+                <ScalarProperty Name="nameCategory" ColumnName="nameCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailBillBorrows">
+            <EntityTypeMapping TypeName="LibraryManagementModel.DetailBillBorrow">
+              <MappingFragment StoreEntitySet="DetailBillBorrow">
+                <ScalarProperty Name="idDetailBillBorrow" ColumnName="idDetailBillBorrow" />
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+                <ScalarProperty Name="idBillBorrow" ColumnName="idBillBorrow" />
+                <ScalarProperty Name="returned" ColumnName="returned" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailBillReturns">
+            <EntityTypeMapping TypeName="LibraryManagementModel.DetailBillReturn">
+              <MappingFragment StoreEntitySet="DetailBillReturn">
+                <ScalarProperty Name="idDetailBillReturn" ColumnName="idDetailBillReturn" />
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+                <ScalarProperty Name="idBillReturn" ColumnName="idBillReturn" />
+                <ScalarProperty Name="idBillBorrow" ColumnName="idBillBorrow" />
+                <ScalarProperty Name="dayBorrowed" ColumnName="dayBorrowed" />
+                <ScalarProperty Name="fine" ColumnName="fine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paramaters">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Paramater">
+              <MappingFragment StoreEntitySet="Paramater">
+                <ScalarProperty Name="idParameter" ColumnName="idParameter" />
+                <ScalarProperty Name="nameParameter" ColumnName="nameParameter" />
+                <ScalarProperty Name="valueParameter" ColumnName="valueParameter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+                <ScalarProperty Name="idReader" ColumnName="idReader" />
+                <ScalarProperty Name="currentDebt" ColumnName="currentDebt" />
+                <ScalarProperty Name="collectedAmount" ColumnName="collectedAmount" />
+                <ScalarProperty Name="remainDebt" ColumnName="remainDebt" />
+                <ScalarProperty Name="paymentDate" ColumnName="paymentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="idPermission" ColumnName="idPermission" />
+                <ScalarProperty Name="namePermission" ColumnName="namePermission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publishers">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Publisher">
+              <MappingFragment StoreEntitySet="Publisher">
+                <ScalarProperty Name="idPublisher" ColumnName="idPublisher" />
+                <ScalarProperty Name="namePublisher" ColumnName="namePublisher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Readers">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Reader">
+              <MappingFragment StoreEntitySet="Reader">
+                <ScalarProperty Name="idReader" ColumnName="idReader" />
+                <ScalarProperty Name="nameReader" ColumnName="nameReader" />
+                <ScalarProperty Name="dobReader" ColumnName="dobReader" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="addressReader" ColumnName="addressReader" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="debt" ColumnName="debt" />
+                <ScalarProperty Name="latestExtended" ColumnName="latestExtended" />
+                <ScalarProperty Name="idTypeReader" ColumnName="idTypeReader" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="LibraryManagementModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+                <ScalarProperty Name="nameStaff" ColumnName="nameStaff" />
+                <ScalarProperty Name="dobStaff" ColumnName="dobStaff" />
+                <ScalarProperty Name="addressStaff" ColumnName="addressStaff" />
+                <ScalarProperty Name="phoneNumberStaff" ColumnName="phoneNumberStaff" />
+                <ScalarProperty Name="accountStaff" ColumnName="accountStaff" />
+                <ScalarProperty Name="passwordStaff" ColumnName="passwordStaff" />
+                <ScalarProperty Name="idPermission" ColumnName="idPermission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeReaders">
+            <EntityTypeMapping TypeName="LibraryManagementModel.TypeReader">
+              <MappingFragment StoreEntitySet="TypeReader">
+                <ScalarProperty Name="idTypeReader" ColumnName="idTypeReader" />
+                <ScalarProperty Name="nameTypeReader" ColumnName="nameTypeReader" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Compose" TypeName="LibraryManagementModel.Compose" StoreEntitySet="Compose">
+            <EndProperty Name="Author">
+              <ScalarProperty Name="idAuthor" ColumnName="idAuthor" />
+            </EndProperty>
+            <EndProperty Name="Book">
+              <ScalarProperty Name="idBook" ColumnName="idBook" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

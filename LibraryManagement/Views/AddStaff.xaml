@@ -1,0 +1,175 @@
+﻿<Window DataContext="{StaticResource StaffViewModel}"
+        x:Class="LibraryManagement.Views.AddStaff"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views"
+        xmlns:vm="clr-namespace:LibraryManagement.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#FFCAE1FF"
+        Icon="/Assets/icon.png"
+        ShowInTaskbar="False"
+        Title="Thêm nhân viên" Height="600" Width="600">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" Content="Nhập thông tin nhân viên" Grid.Row="0" FontWeight="Bold" FontStyle="Italic" Background="{x:Null}" Foreground="#DD000000" FontSize="22"/>
+        <materialDesign:Card Grid.Row="1" Margin="10">
+            <Grid x:Name="gridForNomalInfo" Grid.Row="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Họ tên" Background="{x:Null}" Foreground="#DD000000" FontSize="18"/>
+                    <Label Grid.Row="1" Content="Ngày sinh" Background="{x:Null}" Foreground="#DD000000" FontSize="18"/>
+                    <Label Grid.Row="2" Content="Điện thoại" Background="{x:Null}" Foreground="#DD000000" FontSize="18"/>
+                    <Label Grid.Row="3" Content="Địa chỉ"  Background="{x:Null}" Foreground="#DD000000" FontSize="18"/>
+                    <Label Grid.Row="4" Content="Tên tài khoản" Background="{x:Null}" Foreground="#DD000000" FontSize="18"/>
+                    <Label Grid.Row="5" Content="Mật khẩu" Background="{x:Null}" Foreground="#DD000000" FontSize="18"/>
+                    <Label Grid.Column="0" Grid.Row="6" Content="Chọn loại quyền" Background="{x:Null}" Foreground="#DD000000" FontSize="18" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Column="1" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="NameStaff" Grid.Row="0" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="14">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Text>
+                            <Binding Path="NameStaff" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <vm:ReaderNameValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <DatePicker x:Name="DobStaff"  Grid.Row="1" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="14" SelectedDate="{Binding DobStaff,  UpdateSourceTrigger=PropertyChanged}"  />
+                    <TextBox x:Name="PhoneNumberStaff" Grid.Row="2" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="14" PreviewTextInput="PhoneNumberStaff_PreviewTextInput">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Text>
+                            <Binding Path="PhoneNumberStaff" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <vm:PhoneNumberValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="Address" Grid.Row="3" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="14">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Text>
+                            <Binding Path="AddressStaff" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <vm:ReaderAddressValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="AccountStaff" Grid.Row="4" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="14">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Text>
+                            <Binding Path="AccountStaff" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <vm:UserNameValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox IsTabStop="False" x:Name="PasswordStaff" Grid.Row="5" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="1" Visibility="Visible">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Text>
+                            <Binding Path="PasswordStaff" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <vm:PasswordValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <PasswordBox x:Name="mPasswordStaff" Grid.Row="5" BorderThickness="1" Height="Auto" Margin="5 10" VerticalContentAlignment="Center" Padding="5 0" FontSize="14"
+                                InputScope="Password" PasswordChanged="mPasswordStaff_PasswordChanged">
+                        <PasswordBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </PasswordBox.Resources>
+                    </PasswordBox>
+                    <ComboBox Name="cbPermission" Grid.Row="6" BorderThickness="1" FontSize="18" VerticalAlignment="Center" Padding="5" DisplayMemberPath="namePermission" ItemsSource="{Binding Permission, ValidatesOnExceptions=True}" SelectedItem="{Binding SelectedPermission, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.Width>
+                            <Binding ElementName="NameStaff" Path="ActualWidth"/>
+                        </ComboBox.Width>
+                    </ComboBox>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+       
+        <Grid Grid.Row="4">
+            <Button Width="160" Height="60" Grid.Column="1" Click="Button_Click" Command="{Binding AddCommand}" Background="#FF00BB9A" BorderBrush="{x:Null}" HorizontalContentAlignment="Left" Margin="20">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="false" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=NameStaff, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=PhoneNumberStaff, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=Address, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=DobStaff, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=AccountStaff, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=PasswordStaff, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=cbPermission, Path=(Validation.HasError)}" Value="false" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="true" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <materialDesign:PackIcon Kind="AccountAdd" Width="Auto" Height="Auto" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    <TextBlock Text="Lưu" Margin="20 10 10 10" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        
+    </Grid>
+</Window>

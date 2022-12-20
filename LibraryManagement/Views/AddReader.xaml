@@ -1,0 +1,171 @@
+﻿<Window 
+        DataContext="{StaticResource ReaderViewModel}"
+        x:Class="LibraryManagement.Views.AddReader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views"
+        xmlns:vm="clr-namespace:LibraryManagement.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:WPFToolKit="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFBFD4FF"
+        Icon="/Assets/icon.png"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"
+        Title="Thêm độc giả" Height="500" Width="500">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding CancelAddCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Margin="5">
+        <Grid x:Name="gridForInfo" Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <Label Content="Nhập thông tin độc giả" Grid.Row="0" FontWeight="Bold" FontStyle="Italic" Background="{x:Null}" Foreground="#DD000000" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <materialDesign:Card Grid.Row="1" Margin="10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid x:Name="gridForNomalInfo" Grid.Row="1" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Content="Họ tên" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="1" Content="Ngày sinh" Background="{x:Null}"  FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="2" Content="Email" Background="{x:Null}"  FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="3" Content="Địa chỉ"  Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="4" Content="Ngày lập thẻ" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="5" Content="Loại độc giả" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <TextBox Foreground="Black" x:Name="NameReader" BorderThickness="1" Grid.Row="0" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                                <TextBox.Text>
+                                    <Binding Path="NameReader" UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <vm:ReaderNameValidation/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            <DatePicker Foreground="Black" x:Name="DobReader"  Grid.Row="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="DobReader" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <vm:ReaderDOBValidation/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
+                            <TextBox Foreground="Black" x:Name="Email" Grid.Row="2" BorderThickness="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                                <TextBox.Text>
+                                    <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <vm:ReaderEmailValidation/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            <TextBox Foreground="Black" x:Name="Address" Grid.Row="3" BorderThickness="1"  Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16" >
+                                <TextBox.Text>
+                                    <Binding Path="AddressReader" UpdateSourceTrigger="PropertyChanged" >
+                                        <Binding.ValidationRules>
+                                            <vm:ReaderAddressValidation/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            <TextBox IsReadOnly="True" Foreground="Black" x:Name="CreateAt" Grid.Row="4" Text="{Binding CreatedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=dd/MM/yyyy}" BorderThickness="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            <ComboBox Foreground="Black" Name="cbTypeReader" Grid.Row="5" Grid.Column="1" Margin="10" FontSize="16" Height="Auto" VerticalContentAlignment="Center" Padding="5 0" DisplayMemberPath="nameTypeReader" ItemsSource="{Binding TypeReader}" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="SelectedTypeReader" UpdateSourceTrigger="PropertyChanged">
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                        </Grid>
+
+                    </Grid>
+                </ScrollViewer>
+            </materialDesign:Card>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Click="Button_Click" Height="60" Width="150" Command="{Binding AddCommand}" Grid.Column="1" Background="#FF00BB9A" BorderBrush="{x:Null}" HorizontalContentAlignment="Left" Margin="10">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=NameReader, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=Email, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=Address, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=DobReader, Path=(Validation.HasError)}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <materialDesign:PackIcon Kind="AccountMultiplePlus" Width="30" Height="30" Margin="25 0 5 10" VerticalAlignment="Center"/>
+                        <TextBlock Text="Lưu"  VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="5 5 5 10"/>
+                    </StackPanel>
+                </Button>
+                <!--<Button x:Name="UpdateReader" Click="UpdateReader_Click" Command="{Binding ReloadTypeReaderCommand}"  Visibility="Visible"  Height="60" Width="150" Grid.Row="0" Background="#88DE80" BorderBrush="{x:Null}" HorizontalContentAlignment="Left" Margin="10">
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <materialDesign:PackIcon Foreground="Black" Kind="ContentDuplicate" Width="30" Height="30"/>
+                        <TextBlock Foreground="Black" Text="Cập nhật" VerticalAlignment="Center" Margin="5" FontSize="16" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>-->
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

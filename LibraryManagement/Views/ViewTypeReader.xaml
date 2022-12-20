@@ -1,0 +1,57 @@
+﻿<Window DataContext="{StaticResource TypeReaderViewModel}"
+        x:Class="LibraryManagement.Views.ViewTypeReader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views"
+        mc:Ignorable="d" 
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow"
+        Icon="/Assets/icon.png"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:command="http://www.galasoft.ch/mvvmlight"
+        Title="Danh sách loại độc giả" Height="550" Width="400"
+         Background="#FFBFD4FF"
+        >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=" 4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Grid.Row="0" Margin="10">
+            <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"  VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="ListDisplayTypeReader"  ItemsSource="{Binding ListTypeReader}"  SelectedItem="{Binding SelectedItemTypeReader, Mode=OneWayToSource}" >
+                    <ListView.View >
+                        <GridView>
+                            <GridViewColumn Header="Mã loại độc giả" DisplayMemberBinding="{Binding idTypeReader }"></GridViewColumn>
+                            <GridViewColumn Header="Tên loại độc giả" DisplayMemberBinding="{Binding nameTypeReader}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </materialDesign:Card>
+        <Grid Grid.Row="1">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Command="{Binding DeleteTypeReaderCommand}" HorizontalContentAlignment="Center"  Grid.Column="1" Background="#f44336" BorderBrush="{x:Null}" Height="40" Width="150" Margin="10"  >
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <!--<materialDesign:PackIcon Kind="DeleteForever" Width="Auto" Height="Auto"/>-->
+                        <TextBlock Foreground="Black" Text="Xóa" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="btnAddTypeReader_Click" Height="40" Width="150" Grid.Column="0" HorizontalContentAlignment="Center"  Background="#FF00BB9A" BorderBrush="{x:Null}" Margin="10">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <!--<materialDesign:PackIcon Kind="AccountMultiplePlusOutline" Width="Auto" Height="Auto"/>-->
+                        <TextBlock Foreground="Black" Text="Thêm mới" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>

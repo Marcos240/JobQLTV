@@ -1,0 +1,249 @@
+﻿<UserControl DataContext="{StaticResource LoginViewModel}"
+             x:Class="LibraryManagement.Views.RegulationScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LibraryManagement.Views" xmlns:vm="clr-namespace:LibraryManagement.ViewModels" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Background="#FFF0F0F0"
+             d:DesignHeight="600" d:DesignWidth="900"
+             x:Name="root">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="textBoxErrorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder Name="a" />
+                <TextBlock DockPanel.Dock="Bottom" Foreground="Red"
+                           Text="{Binding ElementName=a, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+            </StackPanel>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitParamaters}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Margin="10" DataContext="{StaticResource ParameterViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Quy định thư viện" Grid.Row="0" FontWeight="Bold" FontStyle="Italic" Background="{x:Null}" Foreground="#DD000000" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0"/>
+        <materialDesign:Card Grid.Row="1" Padding="10" Margin="70 20">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Tuổi tối thiểu" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+                <Label Content="Tuổi tối đa" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+                <Label Content="Thời hạn thẻ (tháng)" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+                <Label Content="Khoảng cách năm xuất bản" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+                <Label Content="Số sách mượn tối đa" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+                <Label Content="Số ngày mượn tối đa" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+                <Label Content="Tiền phạt trễ (VNĐ/Ngày)" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" FontSize="18" Margin="10"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1"
+                    Name="ageMin"
+                    FontSize="18" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1" 
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <local:BindingProxy x:Key="proxyAgeMin" Data="{Binding ageMax}"/>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="ageMin" UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:AgeMinValidation>
+                                    <vm:AgeMinValidation.Wrapper>
+                                        <vm:AgeMinValidationWrapper MaxValue="{Binding Data, Source={StaticResource proxyAgeMin}}"/>
+                                    </vm:AgeMinValidation.Wrapper>
+                                </vm:AgeMinValidation>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1"
+                    Name="ageMax"
+                    FontSize="18" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1" 
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <local:BindingProxy x:Key="proxyAgeMax" Data="{Binding ageMin}"/>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="ageMax" UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:AgeMaxValidation>
+                                    <vm:AgeMaxValidation.Wrapper>
+                                        <vm:AgeMaxValidationWrapper MinValue="{Binding Data, Source={StaticResource proxyAgeMax}}"/>
+                                    </vm:AgeMaxValidation.Wrapper>
+                                </vm:AgeMaxValidation>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+                <TextBox Grid.Row="2" Grid.Column="1"
+                    Name="expiryDate"
+                    FontSize="20" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1"  
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="expiryDate"
+                        UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:ExpiryDateValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+                <TextBox Grid.Row="3" Grid.Column="1"
+                    Name="distancePublish"
+                    FontSize="20" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1"  
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="distancePublish"
+                        UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:DistancePublishValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+                <TextBox Grid.Row="4" Grid.Column="1"
+                    Name="bookBorrowMax"
+                    FontSize="20" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1"  
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="bookBorrowMax"
+                        UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:BookBorrowMaxValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+                <TextBox Grid.Row="5" Grid.Column="1"
+                    Name="dateBorrowMax"
+                    FontSize="20" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1"  
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="dateBorrowMax"
+                        UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:DateBorrowMaxValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+                <TextBox Grid.Row="6" Grid.Column="1"
+                    Name="moneyPenalty"
+                    FontSize="20" VerticalAlignment="Center" TextAlignment="Center" BorderThickness="1"  
+                    Padding="2" Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </TextBox.Resources>
+                    <TextBox.Text>
+                        <Binding Path="moneyPenalty"
+                        UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <vm:MoneyPenaltyValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsReadOnly>
+                        <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToBoolean}"/>
+                    </TextBox.IsReadOnly>
+                </TextBox>
+            </Grid>
+        </materialDesign:Card>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Command="{Binding EditParametersCommand}" BorderBrush="{x:Null}" Background="#FFF39C11" FontSize="20" Margin="40 15" Click="Button_Click">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <materialDesign:PackIcon Kind="Check" Width="Auto" Height="Auto" VerticalAlignment="Center"/>
+                    <TextBlock Text="Xác nhận" Margin="10" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ageMin}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ageMax}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=expiryDate}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=distancePublish}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=bookBorrowMax}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=dateBorrowMax}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=moneyPenalty}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Visibility>
+                    <Binding ElementName="root" Path="DataContext.IdPermission" Converter="{StaticResource PermissonToVisibility}"/>
+                </Button.Visibility>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

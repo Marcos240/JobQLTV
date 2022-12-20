@@ -1,0 +1,251 @@
+﻿<Window x:Class="LibraryManagement.Views.BorrowBook"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryManagement.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        Title="Cho mượn sách"
+        Icon="/Assets/icon.png"
+        DataContext="{StaticResource BorrowBookViewModel}"
+       WindowState="Maximized">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid x:Name="gridReader" Background="#FF6E85B6" Margin="10 10 5 5">
+                    <TextBlock Margin="10" Text="Nhập tên độc giả..." FontSize="12"
+                    Foreground="#000"
+                    Visibility="{Binding ElementName=tbReaderName, Path=Text.IsEmpty,
+                              Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Name="tbReaderName" Background="Transparent" FontSize="14" Margin="10 5 10 0" BorderBrush="Red" Text="{Binding ReaderKeyword, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </Grid>
+            <materialDesign:Card Grid.Row="1" Margin="20 10 20 0" ScrollViewer.CanContentScroll="True" >
+                <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" Grid.Row="1" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                    <DataGrid x:Name="dtgReader" Background="#FFE3F0FF" ItemsSource="{Binding Readers.Readers}" SelectedItem="{Binding ReaderSelected, Mode=OneWayToSource}" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="1" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="STT" Binding="{Binding idReader}"/>
+                            <DataGridTextColumn Header="Tên độc giả" Binding="{Binding nameReader}"/>
+                            <DataGridTextColumn Header="Ngày sinh" Binding="{Binding dobReader}"/>
+                            <DataGridTextColumn Header="Loại độc giả" Binding="{Binding TypeReader.nameTypeReader}"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding email}"/>
+                            <DataGridTextColumn Header="Địa chỉ" Binding="{Binding addressReader}"/>
+                            <DataGridTextColumn Header="Ngày tạo" Binding="{Binding createdAt}"/>
+                            <DataGridTextColumn Header="Nợ" Binding="{Binding debt}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </materialDesign:Card>
+            <Grid Grid.Row="2">
+                <StackPanel HorizontalAlignment="Center" Margin="0 2 0 0" Orientation="Horizontal">
+                    <Button Height="20" Foreground="Black" Background="#FF47608E" Command="{Binding MoveToPreviousReadersPage}" Padding="10 0 10 2" Margin="0 0 20 0" >&lt;</Button>
+                    <TextBlock Height="20" Text="{Binding Readers.CurrentPage}"></TextBlock>
+                    <TextBlock Height="20">/</TextBlock>
+                    <TextBlock Height="20" Text="{Binding Readers.PageCount}"></TextBlock>
+                    <Button Height="20" Foreground="Black" Background="#FF47608E" Command="{Binding MoveToNextReadersPage}" Padding="10 0 10 2" Margin="20 0 0 0">&gt;</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="101*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.3*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="10 10 5 5" x:Name="gridSach" Background="#FF6E85B6" Grid.ColumnSpan="2">
+                <TextBlock Margin="10" Text="Nhập tên sách..." FontSize="12"
+                    Foreground="#000"
+                    Visibility="{Binding ElementName=tbBookName, Path=Text.IsEmpty,
+                              Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="tbBookName" Background="Transparent" Margin="10 5 10 0" FontSize="14" BorderBrush="Red" Text="{Binding BookKeyword, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <materialDesign:Card Grid.Row="1" Margin="20 10 20 10"  Grid.ColumnSpan="2">
+                <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                    <DataGrid Background="#FFE3F0FF" x:Name="dtgSach" ItemsSource="{Binding Books.Books, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="1" >
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Background="#FF47608E" Content="+" Command="{Binding Path=DataContext.SelectBook, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" CommandParameter="{Binding}" ToolTip="Thêm vào danh sách mượn"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="STT" Binding="{Binding idBook}"/>
+                            <DataGridTextColumn Header="Tên sách" Binding="{Binding nameBook}"/>
+                            <DataGridTextColumn Header="Năm Xuất bản" Binding="{Binding dateManufacture.Year}"/>
+                            <DataGridTextColumn Header="Giá" Binding="{Binding price}"/>
+                            <DataGridTextColumn Header="Trạng thái" Binding="{Binding statusBook}"/>
+                            <DataGridTextColumn Header="Thể loại" Binding="{Binding Category.nameCategory}"/>
+                            <DataGridTextColumn Header="Tác giả" Binding="{Binding Authors, Converter={StaticResource AuthorsConverter}}"/>
+                            <DataGridTextColumn Header="Nhà xuất bản" Binding="{Binding Publisher.namePublisher}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </materialDesign:Card>
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0.2,0.2,-0.2">
+                <StackPanel HorizontalAlignment="Center" Margin="0 2 0 0" Orientation="Horizontal">
+                    <Button Height="20" Foreground="Black" Background="#FF47608E" Command="{Binding MoveToPreviousBooksPage}" Padding="10 0 10 2" Margin="0 0 20 0" >&lt;</Button>
+                    <TextBlock Height="20" Text="{Binding Books.CurrentPage}"></TextBlock>
+                    <TextBlock Height="20">/</TextBlock>
+                    <TextBlock Height="20" Text="{Binding Books.PageCount}"></TextBlock>
+                    <Button Height="20" Foreground="Black" Background="#FF47608E" Command="{Binding MoveToNextBooksPage}" Padding="10 0 10 2" Margin="20 0 0 0">&gt;</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="5">
+                    <TextBlock Padding="15" TextAlignment="Left" FontSize="18">Thông tin độc giả mượn sách</TextBlock>
+                </Grid>
+                <materialDesign:Card Background="#FFE3F0FF"  Grid.Row="2" Margin="10 ">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <TextBlock VerticalAlignment="Center" Foreground="Black" HorizontalAlignment="Left"  Padding="10"  Text="STT" Grid.ColumnSpan="2"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <TextBlock Foreground="Black" VerticalAlignment="Center"  HorizontalAlignment="Left" Padding="10" Text="Tên độc giả" Grid.ColumnSpan="2"/>
+
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="0">
+                                <TextBlock Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Left" Padding="10" Text="Ngày sinh" Grid.ColumnSpan="2"/>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="0">
+                                <TextBlock Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Left"  Padding="10" Text="Loại độc giả" Grid.ColumnSpan="2"/>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="0">
+                                <TextBlock Foreground="Black"  VerticalAlignment="Center"    HorizontalAlignment="Left" Padding="10" Text="Số nợ" Grid.ColumnSpan="2"/>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <TextBox  Foreground="Black" BorderThickness="1" Margin="8"  TextAlignment="Left" Text="{Binding ReaderSelected.idReader}" >
+                                    <TextBox.Resources>
+                                        <Style TargetType="{x:Type Border}" >
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <TextBox Foreground="Black" x:Name="tbAge" BorderThickness="1" Margin="8" TextAlignment="Left" VerticalContentAlignment="Center" Text="{Binding ReaderSelected.nameReader}" >
+                                    <TextBox.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1">
+                                <TextBox Foreground="Black"  BorderThickness="1" Margin="8" TextAlignment="Left" Text="{Binding ReaderSelected.dobReader}">
+                                    <TextBox.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="1">
+                                <TextBox Foreground="Black" BorderThickness="1" Margin="8" Text="{Binding ReaderSelected.TypeReader.nameTypeReader}">
+                                    <TextBox.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="1">
+                                <TextBox  Foreground="Black" BorderThickness="1" Margin="8"  Text="{Binding ReaderSelected.debt}">
+                                    <TextBox.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </materialDesign:Card>
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel Grid.Column="1" Margin="0 100 10 0">
+                    <Button FontWeight="Bold" Foreground="Black" Background="#47608E" Content="Chọn lại sách" Margin="10" Command="{Binding Path=UnselectAllBooks}" Height="80"/>
+                    <Button FontWeight="Bold" Foreground="Black" Background="#47608E" Content="Cho mượn" Margin="10" Command="{Binding Path=BorrowCommand}" Height="80"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="5">
+                <TextBlock Padding="15" TextAlignment="Left" FontSize="18">Sách đã chọn</TextBlock>
+            </Grid>
+            <materialDesign:Card Grid.Row="1" Margin="0 20" Background="#FFDAE0E9">
+                <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_2" VerticalScrollBarVisibility="Auto">
+                    <DataGrid  Background="#FFE3F0FF" ItemsSource="{Binding ListBooksSelected, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="1">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Button Content="-" Command="{Binding Path=DataContext.UnselectBook, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" CommandParameter="{Binding}" ToolTip="Loại ra khỏi danh sách mượn"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="STT" Binding="{Binding idBook}"/>
+                            <DataGridTextColumn Header="Tên sách" Binding="{Binding nameBook}"/>
+                            <DataGridTextColumn Header="Tác giả" Binding="{Binding Authors, Converter={StaticResource AuthorsConverter}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>
