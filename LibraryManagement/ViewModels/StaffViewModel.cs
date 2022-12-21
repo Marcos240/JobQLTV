@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using LibraryManagement.Helpers;
 
 namespace LibraryManagement.ViewModels
 {
@@ -20,7 +21,7 @@ namespace LibraryManagement.ViewModels
 
         private ObservableCollection<Permission> _Permission;
         public ObservableCollection<Permission> Permission { get => _Permission; set { _Permission = value; OnPropertyChanged(); } }
-        public Assets.Helper helper = new Assets.Helper();
+        public Helper helper = new Helper();
 
         private Staff _SelectedItem;
 

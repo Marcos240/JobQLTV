@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryManagement.Assets
+namespace LibraryManagement.Helpers
 {
     public class Helper
     {

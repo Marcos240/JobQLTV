@@ -17,6 +17,7 @@ using System.Windows.Input;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using OfficeOpenXml.Filter;
+using LibraryManagement.Helpers;
 
 namespace LibraryManagement.ViewModels
 {
@@ -30,7 +31,7 @@ namespace LibraryManagement.ViewModels
 
         private ObservableCollection<Author> _ListAuthors;
         public ObservableCollection<Author> ListAuthors { get => _ListAuthors; set { _ListAuthors = value; OnPropertyChanged(); } }
-        public Assets.Helper helper = new Assets.Helper();
+        public Helper helper = new Helper();
 
         //Selected data of DB
         private Book _SelectedItem;

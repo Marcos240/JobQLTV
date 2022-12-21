@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Data.Entity;
+using LibraryManagement.Helpers;
 
 namespace LibraryManagement.ViewModels
 {
@@ -22,7 +23,7 @@ namespace LibraryManagement.ViewModels
         private string bookKeyword;
         private string readerKeyword;
 
-        private Assets.Helper helper = new Assets.Helper();
+        private Helper helper = new Helper();
         public ObservableCollection<Book> ListBooksSelected { 
             get => listBooksSelected; 
             set { 
