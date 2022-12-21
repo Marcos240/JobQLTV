@@ -53,13 +53,16 @@
                     </Grid>
 
                     <Grid Grid.Row="1" Margin="10 0 10 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="8*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-                        <materialDesign:Card Grid.Row="0" Background="#FFE3F0FF" Margin="20,10,10,10" BorderThickness="0" VerticalAlignment="Stretch">
-                            <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" VerticalScrollBarVisibility="Auto">
-                                <ListView Name="ListReportCategory" ItemsSource="{Binding Category_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+
+                        <materialDesign:Card
+                                             Background="#FFE3F0FF" Margin="20,10,10,10" 
+                                             BorderThickness="0" 
+                                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
+                                          VerticalScrollBarVisibility="Auto">
+                                <ListView Name="ListReportCategory" 
+                                          ItemsSource="{Binding Category_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          >
                                     <ListView.View >
                                         <GridView>
                                             <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
@@ -116,8 +119,6 @@
 
             </controls:MetroTabItem>
 
-
-
             <controls:MetroTabItem Header="Thống kê sách trả trễ" Height="40">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -152,7 +153,8 @@
 
                     <materialDesign:Card Grid.Row="1" Margin="20 0 20 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
                         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
-                            <ListView Name="ListReportLate" ItemsSource="{Binding Late_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                            <ListView Name="ListReportLate" 
+                                      ItemsSource="{Binding Late_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
                                 <ListView.View >
                                     <GridView>
                                         <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
@@ -170,6 +172,53 @@
                             BorderThickness="0"
                             Command="{Binding ExportLate}"
                             Grid.Row="2"
+                            Height="50"
+                            Padding="5"
+                            Width="160"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Xuất báo cáo ra file Excel"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 20 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Xuất Báo Cáo"
+                                            VerticalAlignment="Center"
+                                            Margin="0 0 5 0" />
+                            <materialDesign:PackIcon VerticalAlignment="Center"
+                                                            Kind="FileExcel"
+                                                            Width="20"
+                                                            Height="20" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </controls:MetroTabItem>
+            <controls:MetroTabItem Header="Thống kê số lượng sách đang mượn" Height="40">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <materialDesign:Card Grid.Row="0" Margin="10 20 10 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                            <ListView 
+                                      ItemsSource="{Binding Late_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                <ListView.View >
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Ngày mượn" DisplayMemberBinding="{Binding DateBorrow, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyy'}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số ngày trả trễ" DisplayMemberBinding="{Binding DaysReturnLate, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+
+                    <!--Xuất File excel-->
+                    <Button Background="DarkGreen"
+                            BorderThickness="0"
+                            Command="{Binding ExportLate}"
+                            Grid.Row="1"
                             Height="50"
                             Padding="5"
                             Width="160"
