@@ -27,19 +27,26 @@ namespace LibraryManagement.ViewModels
 
         public DateTime _dateExpired;
         public DateTime DateExpired { get => _dateExpired; set { _dateExpired = value; OnPropertyChanged(); } }
-
+        
+        //Danh sách thể loại
         private ObservableCollection<ReportCategory> _ListCategory;
         public ObservableCollection<ReportCategory> Category_List { get => _ListCategory; set { _ListCategory = value; OnPropertyChanged(); } }
         public AppCommand<object> LoadReportCategory { get; }
-        //
+        //Danh sách sách trả trễ
         private ObservableCollection<ReportReturnLate> _ListLate;
         public ObservableCollection<ReportReturnLate> Late_List { get => _ListLate; set { _ListLate = value; OnPropertyChanged(); } }
+        //Danh sách sách đang mượn
+        private ObservableCollection<BorrowBook> _borrowList;
+        public ObservableCollection<BorrowBook> BorrowList { get => _borrowList; set { _borrowList = value; OnPropertyChanged(); } }
+
+
         public AppCommand<object> LoadReportLate { get; }
         public AppCommand<object> ExportCategory { get; set; }
         public AppCommand<object> ExportLate { get; set; }
 
         public ReportViewModel()
         {
+            
             //Report Book borow with category
             Category_List = new ObservableCollection<ReportCategory>();
             var categoryList = DataAdapter.Instance.DB.Categories;
@@ -190,7 +197,6 @@ namespace LibraryManagement.ViewModels
                     }
                 }
             });
-            // --End Load Turn Borrow with Month and Year User select.
 
             // -- End Report Book borow with category
 
