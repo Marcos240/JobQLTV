@@ -114,7 +114,7 @@ namespace LibraryManagement.ViewModels
                 }
                 catch (Exception)
                 {
-
+                    MessageBox.Show("Đã có lỗi xảy ra!");
                 }
             }
             // -- End Load Turn Borrow with Month of Today and Year of Today
@@ -193,7 +193,7 @@ namespace LibraryManagement.ViewModels
                     }
                     catch (Exception)
                     {
-
+                        MessageBox.Show("Đã có lỗi xảy ra!");
                     }
                 }
             });
@@ -238,7 +238,7 @@ namespace LibraryManagement.ViewModels
                 }
                 catch (Exception)
                 {
-
+                    MessageBox.Show("Đã có lỗi xảy ra!");
                 }
 
             }
@@ -281,7 +281,7 @@ namespace LibraryManagement.ViewModels
                     }
                     catch (Exception)
                     {
-
+                        MessageBox.Show("Đã có lỗi xảy ra!");
                     }
 
                 }
