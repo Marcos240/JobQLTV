@@ -129,15 +129,16 @@
 
                     <Grid Grid.Row="0" Margin="10 0 10 0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100*"/>
-                            <ColumnDefinition Width="200*"/>
-                            <ColumnDefinition Width="700*"/>
+                            <ColumnDefinition Width="78*"/>
+                            <ColumnDefinition Width="156*"/>
+                            <ColumnDefinition Width="382*"/>
+                            <ColumnDefinition Width="165*"/>
                         </Grid.ColumnDefinitions>
                         <DatePicker 
                             HorizontalContentAlignment="Center" Name="Day" 
                             Loaded="day_Loaded"  Grid.Column="0" 
                             SelectedDate="{ Binding DateExpired, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyyy'}" 
-                            Margin="10,0,0,0" HorizontalAlignment="Left" Width="100"/>
+                            Margin="10,32,0,32" HorizontalAlignment="Left" Width="100" Grid.ColumnSpan="2"/>
                         <Button
                             Grid.Column="1"
                             Width="120"
@@ -145,8 +146,8 @@
                             materialDesign:ButtonAssist.CornerRadius="20"  
                             Background="#596FB5"
                             BorderThickness="0"
-                            Margin="48,22,32,21"
-                            Command="{Binding LoadReportLate}">
+                            Margin="48,22,369.5,22"
+                            Command="{Binding LoadReportLate}" Grid.ColumnSpan="2">
                             <TextBlock Text="Thống kê" FontSize="15" />
                         </Button>
                     </Grid>
@@ -191,7 +192,7 @@
                     </Button>
                 </Grid>
             </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Thống kê số lượng sách đang mượn" Height="40">
+            <controls:MetroTabItem Header="Thống kê số lượng sách đang mượn" Height="40" Loaded="MetroTabItem_Loaded">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="8*"/>
@@ -201,13 +202,65 @@
                     <materialDesign:Card Grid.Row="0" Margin="10 20 10 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
                         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
                             <ListView 
-                                      ItemsSource="{Binding Late_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                      ItemsSource="{Binding BorrowList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
                                 <ListView.View >
                                     <GridView>
                                         <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
-                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
                                         <GridViewColumn Header="Ngày mượn" DisplayMemberBinding="{Binding DateBorrow, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyy'}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Số ngày trả trễ" DisplayMemberBinding="{Binding DaysReturnLate, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số ngày mượn còn lại" DisplayMemberBinding="{Binding NumberDateBorrow, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="người mượn" DisplayMemberBinding="{Binding UserBorrow, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+
+                    <!--Xuất File excel-->
+                    <Button Background="DarkGreen"
+                            BorderThickness="0"
+                            Command="{Binding ExportLate}"
+                            Grid.Row="1"
+                            Height="50"
+                            Padding="5"
+                            Width="160"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Xuất báo cáo ra file Excel"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 20 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Xuất Báo Cáo"
+                                            VerticalAlignment="Center"
+                                            Margin="0 0 5 0" />
+                            <materialDesign:PackIcon VerticalAlignment="Center"
+                                                            Kind="FileExcel"
+                                                            Width="20"
+                                                            Height="20" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </controls:MetroTabItem>
+            <controls:MetroTabItem Header="Top 10 sách được mượn nhiều" Height="40" Loaded="MetroTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <materialDesign:Card Grid.Row="0" Margin="10 20 10 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                            <ListView 
+                                      ItemsSource="{Binding Top10List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                <ListView.View >
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Ngày mượn" DisplayMemberBinding="{Binding DateBorrow, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyy'}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số lượng mượn" DisplayMemberBinding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -239,7 +292,7 @@
                 </Grid>
             </controls:MetroTabItem>
         </controls:MetroAnimatedTabControl>
-
+        <Button x:Name="btnReloadReport" Command="{Binding ReloadReport }" Visibility="Hidden" />
     </Grid>
 
 </UserControl>

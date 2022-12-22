@@ -91,6 +91,7 @@ namespace LibraryManagement.ViewModels
             InitBooks();
             InitReaders();
         }
+
         /// <summary>
         /// Definitions for commands
         /// </summary>
@@ -155,7 +156,8 @@ namespace LibraryManagement.ViewModels
             SelectBook = new AppCommand<object>(
                 p =>
                 {
-                    return true;
+                    Book book = p as Book;
+                    return book!=null && book.statusBook == "có sẵn";
                 },
                 p => {
                     // Select reader first for checking pre condition
@@ -263,6 +265,8 @@ namespace LibraryManagement.ViewModels
         }
 
 
+
+
         private int GetBookBorrowedOfReader(Reader reader)
         {
             int result = (from br in DataAdapter.Instance.DB.BillBorrows
@@ -335,5 +339,7 @@ namespace LibraryManagement.ViewModels
                 Books = new BookPaginatingCollection(10);
             }
         }
+
+        
     }
 }
