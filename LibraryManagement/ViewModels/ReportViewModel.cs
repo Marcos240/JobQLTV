@@ -37,22 +37,25 @@ namespace LibraryManagement.ViewModels
         public ObservableCollection<ReportReturnLate> Late_List { get => _ListLate; set { _ListLate = value; OnPropertyChanged(); } }
         //Danh sách sách đang mượn
         private ObservableCollection<BorrowBook> _borrowList;
-        public ObservableCollection<BorrowBook> BorrowList { get => _borrowList; set { _borrowList = value; OnPropertyChanged(); } }
+        public ObservableCollection<BorrowBook> BorrowList { get => _borrowList; set { _borrowList = value; OnPropertyChanged();  } }
 
+        private ObservableCollection<BorrowBookDetail> _top10List;
+        public ObservableCollection<BorrowBookDetail> Top10List { get => _top10List; set { _top10List = value; OnPropertyChanged(); } }
 
         public AppCommand<object> LoadReportLate { get; }
         public AppCommand<object> ExportCategory { get; set; }
         public AppCommand<object> ExportLate { get; set; }
+        public AppCommand<object> ReloadReport { get; set; }
+        // public AppCommand<object>  LoadReportBorrow { get; set; }
 
         public ReportViewModel()
         {
-            
+
             //Report Book borow with category
             Category_List = new ObservableCollection<ReportCategory>();
             var categoryList = DataAdapter.Instance.DB.Categories;
             int sumTurn = 0;
             int i = 1;
-
             //Cal ALL tunrn borrow save in SumTurn  
             foreach (var item in categoryList)
             {
@@ -208,6 +211,9 @@ namespace LibraryManagement.ViewModels
             int j;
             DateExpired = DateTime.Today;
 
+
+
+
             //Load book borrowing return late from today
             dateCal = DateExpired.AddDays(-(DataAdapter.Instance.DB.Paramaters.Find(7).valueParameter));
             j = 1;
@@ -259,23 +265,23 @@ namespace LibraryManagement.ViewModels
                     var Late3 = from b in DataAdapter.Instance.DB.Books
                                 join d in DataAdapter.Instance.DB.DetailBillBorrows on b.idBook equals d.idBook
                                 join br in DataAdapter.Instance.DB.BillBorrows on d.idBillBorrow equals br.idBillBorrow
-                                where br.idBillBorrow == item5.idBillBorrow  && d.returned == 0
+                                where br.idBillBorrow == item5.idBillBorrow && d.returned == 0
                                 select new { NameBook = b.nameBook, BorrowDate = item5.borrowDate };
                     try
                     {
                         foreach (var item6 in Late3)
                         {
                             ReportReturnLate reportlate = new ReportReturnLate();
-                                            reportlate.Name = item6.NameBook;
-                                            reportlate.No = j;
-                                            reportlate.DateBorrow = item6.BorrowDate;
-                                            reportlate.DaysReturnLate = (int)((dateCal - item6.BorrowDate).TotalDays);
-                                            if ((dateCal - item6.BorrowDate).TotalDays - (int)((dateCal - item6.BorrowDate).TotalDays) > 0) reportlate.DaysReturnLate++;
-                                            if(reportlate.DaysReturnLate > 0)
-                                            { 
-                                                Late_List.Add(reportlate);
-                                                j++;
-                                            }
+                            reportlate.Name = item6.NameBook;
+                            reportlate.No = j;
+                            reportlate.DateBorrow = item6.BorrowDate;
+                            reportlate.DaysReturnLate = (int)((dateCal - item6.BorrowDate).TotalDays);
+                            if ((dateCal - item6.BorrowDate).TotalDays - (int)((dateCal - item6.BorrowDate).TotalDays) > 0) reportlate.DaysReturnLate++;
+                            if (reportlate.DaysReturnLate > 0)
+                            {
+                                Late_List.Add(reportlate);
+                                j++;
+                            }
                         }
 
                     }
@@ -288,6 +294,12 @@ namespace LibraryManagement.ViewModels
 
                 // --End Load Book return late with day you select
             });
+
+
+            //Load Book return late with day you select
+
+
+
 
             ExportCategory = new AppCommand<object>(
                 param => true,
@@ -607,9 +619,112 @@ namespace LibraryManagement.ViewModels
                         MessageBox.Show("Có lỗi khi lưu file");
                     }
                 });
+
+            ReloadReport = new AppCommand<object>((p) =>
+                {
+                    return true;
+                }, (p) =>
+                {
+                    //Load Book return late with day you select
+                    init();
+                    getTop10();
+                });
         }
         // End Report Book return late 
+        private void init()
+        { 
+            int dateExpire = DataAdapter.Instance.DB.Paramaters.Find(7).valueParameter;
+            try
+            {
+                var BorrowBookLst = (from b in DataAdapter.Instance.DB.Books
+                                     join d in DataAdapter.Instance.DB.DetailBillBorrows on b.idBook equals d.idBook
+                                     join br in DataAdapter.Instance.DB.BillBorrows on d.idBillBorrow equals br.idBillBorrow
+                                     join user in DataAdapter.Instance.DB.Readers on br.idReader equals user.idReader
+                                     where d.returned == 0
+                                     select new
+                                     {
+                                         NameBook = b.nameBook,
+                                         DateBorrow = br.borrowDate,
+                                         NameCategory = b.Category.nameCategory,
+                                         PublisherName = b.Publisher.namePublisher,
+                                         UserBorrow = user.nameReader,
+                                     }
+                                    ).AsEnumerable().Select((item, index) => new BorrowBook {
+                                        No = index+1,
+                                        NameBook = item.NameBook,
+                                        DateBorrow = item.DateBorrow,
+                                        NameCategory = item.NameCategory,
+                                        PublisherName = item.PublisherName,
+                                        UserBorrow = item.UserBorrow,
+                                        NumberDateBorrow = dateExpire - DateTime.Now.Subtract(item.DateBorrow).Days
+                                    }).Where((item) => item.NumberDateBorrow >= 0).ToList();
 
+                if(BorrowBookLst.Any()) BorrowList = new ObservableCollection<BorrowBook>(BorrowBookLst);
+            }
+            catch (Exception EE)
+            {
+                MessageBox.Show("Lỗi lấy data");
+            }
+        }
+
+        private void getTop10()
+        {
+            var BorrowBookLst = (from b in DataAdapter.Instance.DB.Books
+                                 join d in DataAdapter.Instance.DB.DetailBillBorrows on b.idBook equals d.idBook
+                                 join br in DataAdapter.Instance.DB.BillBorrows on d.idBillBorrow equals br.idBillBorrow
+                                 select new
+                                     {
+                                         IdBook =b.idBook,
+                                         NameBook = b.nameBook,
+                                         DateBorrow = br.borrowDate,
+                                         NameCategory = b.Category.nameCategory,
+                                         PublisherName = b.Publisher.namePublisher,
+                                     }
+                                 ).GroupBy(o=> new { o.IdBook,o.NameBook,o.NameCategory,o.PublisherName}).AsEnumerable()
+                                .Select((item, index) => new BorrowBookDetail
+                                {
+                                    No = index + 1,
+                                    IdBook = item.Key.IdBook,
+                                    NameBook = item.Key.NameBook,
+                                    NameCategory = item.Key.NameCategory,
+                                    PublisherName = item.Key.PublisherName,
+                                    Count = item.Count()
+                                }).OrderByDescending(item=>item.Count)
+                                .Take(10).ToList();
+
+            Top10List = new ObservableCollection<BorrowBookDetail>(BorrowBookLst);
+        }
+
+        private void getBookReportByYear(DateTime fromDate,DateTime toDate)
+        {
+            int dateExpire = DataAdapter.Instance.DB.Paramaters.Find(7).valueParameter;
+            var BorrowBookLst = (from b in DataAdapter.Instance.DB.Books
+                                 join d in DataAdapter.Instance.DB.DetailBillBorrows on b.idBook equals d.idBook
+                                 join br in DataAdapter.Instance.DB.BillBorrows on d.idBillBorrow equals br.idBillBorrow
+                                 select new
+                                     {
+                                         IdBook = b.idBook,
+                                         NameBook = b.nameBook,
+                                         DateBorrow = br.borrowDate,
+                                         NameCategory = b.Category.nameCategory,
+                                         PublisherName = b.Publisher.namePublisher,
+                                     }
+                                ).Where((item) => fromDate <= item.DateBorrow && item.DateBorrow <= toDate)
+                                .GroupBy(o => new { o.IdBook, o.NameBook, o.NameCategory, o.PublisherName }).AsEnumerable()
+                                .Select((item, index) => new BorrowBook
+                                    {
+                                        No = index + 1,
+                                        IdBook = item.Key.IdBook,
+                                        NameBook = item.Key.NameBook,
+                                        NameCategory = item.Key.NameCategory,
+                                        PublisherName = item.Key.PublisherName,
+                                        Count = item.Count()
+                                    })
+                                .OrderByDescending(item => item.Count)
+                                .ToList();
+
+            BorrowList = new ObservableCollection<BorrowBook>(BorrowBookLst);
+        }
     }
 
 

@@ -1,4 +1,5 @@
-﻿using LibraryManagement.Models;
+﻿using LibraryManagement.Helpers;
+using LibraryManagement.Models;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace LibraryManagement.ViewModels
         private BillReturn billReturn;
         private DateTime dateReturn;
 
-        public Assets.Helper helper = new Assets.Helper();
+        private Helper helper = new Helper();
         public string ReaderSearchKeyword
         {
             get => readerSearchKeyword;

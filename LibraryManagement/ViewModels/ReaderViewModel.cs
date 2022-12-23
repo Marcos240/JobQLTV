@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using Microsoft.Office.Interop.Excel;
 using System.Collections.Generic;
 using System.Runtime.Remoting;
+using LibraryManagement.Helpers;
 
 namespace LibraryManagement.ViewModels
 {
@@ -29,7 +30,7 @@ namespace LibraryManagement.ViewModels
         private ObservableCollection<TypeReader> _TypeReader;
         public ObservableCollection<TypeReader> TypeReader { get => _TypeReader; set { _TypeReader = value; OnPropertyChanged(); } }
 
-        public Assets.Helper helper = new Assets.Helper();
+        public Helper helper = new Helper();
 
         private Reader _SelectedItem;
         public Reader SelectedItem

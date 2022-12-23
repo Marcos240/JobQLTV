@@ -63,5 +63,10 @@ namespace LibraryManagement.Views
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
+
+        private void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            btnReloadReport.Command.Execute(null);
+        }
     }
 }

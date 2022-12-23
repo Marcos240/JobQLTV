@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Data.Entity;
+using LibraryManagement.Helpers;
 
 namespace LibraryManagement.ViewModels
 {
@@ -22,7 +23,7 @@ namespace LibraryManagement.ViewModels
         private string bookKeyword;
         private string readerKeyword;
 
-        private Assets.Helper helper = new Assets.Helper();
+        private Helper helper = new Helper();
         public ObservableCollection<Book> ListBooksSelected { 
             get => listBooksSelected; 
             set { 
@@ -90,6 +91,7 @@ namespace LibraryManagement.ViewModels
             InitBooks();
             InitReaders();
         }
+
         /// <summary>
         /// Definitions for commands
         /// </summary>
@@ -154,7 +156,8 @@ namespace LibraryManagement.ViewModels
             SelectBook = new AppCommand<object>(
                 p =>
                 {
-                    return true;
+                    Book book = p as Book;
+                    return book!=null && book.statusBook == "có sẵn";
                 },
                 p => {
                     // Select reader first for checking pre condition
@@ -262,6 +265,8 @@ namespace LibraryManagement.ViewModels
         }
 
 
+
+
         private int GetBookBorrowedOfReader(Reader reader)
         {
             int result = (from br in DataAdapter.Instance.DB.BillBorrows
@@ -334,5 +339,7 @@ namespace LibraryManagement.ViewModels
                 Books = new BookPaginatingCollection(10);
             }
         }
+
+        
     }
 }

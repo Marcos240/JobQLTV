@@ -1,4 +1,7 @@
-﻿CREATE DATABASE LibraryManagement
+﻿use master
+drop database LibraryManagement
+
+CREATE DATABASE LibraryManagement
 GO
 
 USE LibraryManagement
@@ -13,7 +16,8 @@ CREATE TABLE Staff
 		phoneNumberStaff NVARCHAR(MAX) NOT NULL,
 		accountStaff VARCHAR(255) UNIQUE NOT NULL,
 		passwordStaff VARCHAR(MAX) NOT NULL,
-		idPermission INT NOT NULL
+		idPermission INT NOT NULL,
+		nameStaffSearch NVARCHAR(MAX) NOT NULL
 	)
 GO
 
@@ -36,7 +40,8 @@ CREATE TABLE Book
 		statusBook NVARCHAR(MAX) NOT NULL,
 		idCategory INT NOT NULL,
 		idPublisher INT NOT NULL,
-		image NVARCHAR(MAX)
+		image NVARCHAR(MAX),
+		nameBookSearch NVARCHAR(MAX) NOT NULL
 	)
 GO
 
@@ -80,7 +85,8 @@ CREATE TABLE Reader
 		createdAt SMALLDATETIME NOT NULL,
 		debt INT NOT NULL,
 		latestExtended SMALLDATETIME NOT NULL,
-		idTypeReader INT NOT NULL
+		idTypeReader INT NOT NULL,
+		nameReaderSearch NVARCHAR(MAX) NOT NULL
 	)
 GO
 
@@ -186,10 +192,10 @@ insert into TypeReader values(N'Học sinh')
 insert into TypeReader values(N'Sinh viên')
 insert into TypeReader values(N'Tự do')
 
-insert into Reader values(N'Lê Anh Tuấn', '01/01/2000', 'email1@gmail.com', N'Gia Lai', '01/01/2020', 0, '01/01/2020', 2)
-insert into Reader values(N'Lê Xuân Tùng', '01/02/2000', 'email2@gmail.com', N'Quảng Bình', '01/02/2020', 0, '01/02/2020', 1)
-insert into Reader values(N'Nguyễn Thanh Tuấn', '01/03/2000', 'email3@gmail.com', N'Quảng Ngãi', '01/03/2020', 0,'01/03/2020', 2)
-insert into Reader values(N'Nguyễn Xuân Tú', '01/04/2000', 'email4@gmail.com', N'Hà Tĩnh', '01/04/2020', 0, '01/04/2020', 3)
+insert into Reader values(N'Lê Anh Tuấn', '01/01/2000', 'email1@gmail.com', N'Gia Lai', '01/01/2020', 0, '01/01/2020', 2,'le anh tuan')
+insert into Reader values(N'Lê Xuân Tùng', '01/02/2000', 'email2@gmail.com', N'Quảng Bình', '01/02/2020', 0, '01/02/2020', 1,'le xuan tung')
+insert into Reader values(N'Nguyễn Thanh Tuấn', '01/03/2000', 'email3@gmail.com', N'Quảng Ngãi', '01/03/2020', 0,'01/03/2020', 2,'nguyen thanh tuan')
+insert into Reader values(N'Nguyễn Xuân Tú', '01/04/2000', 'email4@gmail.com', N'Hà Tĩnh', '01/04/2020', 0, '01/04/2020', 3,'nguyen xuan tu')
 
 
 insert into Publisher values(N'Nhà xuất bản 1')
@@ -210,40 +216,39 @@ insert into Category values(N'Thể loại 3')
 insert into Category values(N'Thể loại 4')
 insert into Category values(N'Thể loại 5')
 
-insert into Book values(N'Sách 1', '01/01/2010', '01/01/2020', 20000, N'có sẵn', 1, 1, '/')
-insert into Book values(N'Sách 2', '01/02/2010', '01/01/2020', 30000, N'có sẵn', 2, 2, '/')
-insert into Book values(N'Sách 3', '01/03/2010', '01/01/2020', 40000, N'có sẵn', 3, 3, '/')
-insert into Book values(N'Sách 4', '01/04/2010', '01/01/2020', 50000, N'có sẵn', 4, 4, '/')
-insert into Book values(N'Sách 5', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 5, 5, '/')
-
-insert into Book values(N'Sách 6', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 1, 3, '/')
-insert into Book values(N'Sách 7', '01/05/2010', '01/01/2020', 70000, N'có sẵn', 2, 4, '/')
-insert into Book values(N'Sách 8', '01/05/2010', '01/01/2020', 80000, N'có sẵn', 3, 5, '/')
-insert into Book values(N'Sách 9', '01/05/2010', '01/01/2020', 90000, N'có sẵn', 4, 1, '/')
-insert into Book values(N'Sách 10', '01/05/2010', '01/01/2020', 100000, N'có sẵn', 5, 2, '/')
-insert into Book values(N'Sách 11', '01/05/2010', '01/01/2020', 110000, N'có sẵn', 1, 3, '/')
-insert into Book values(N'Sách 12', '01/05/2010', '01/01/2020', 53000, N'có sẵn', 2, 4, '/')
-insert into Book values(N'Sách 13', '01/05/2010', '01/01/2020', 54000, N'có sẵn', 3, 5, '/')
-insert into Book values(N'Sách 14', '01/05/2010', '01/01/2020', 55000, N'có sẵn', 4, 1, '/')
-insert into Book values(N'Sách 15', '01/05/2010', '01/01/2020', 56000, N'có sẵn', 5, 2, '/')
-insert into Book values(N'Sách 16', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 1, 3, '/')
-insert into Book values(N'Sách 17', '01/05/2010', '01/01/2020', 57000, N'có sẵn', 2, 4, '/')
-insert into Book values(N'Sách 18', '01/05/2010', '01/01/2020', 58000, N'có sẵn', 3, 5, '/')
-insert into Book values(N'Sách 19', '01/05/2010', '01/01/2020', 59000, N'có sẵn', 4, 1, '/')
-insert into Book values(N'Sách 20', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 5, 2, '/')
-insert into Book values(N'Sách 21', '01/05/2010', '01/01/2020', 61000, N'có sẵn', 1, 3, '/')
-insert into Book values(N'Sách 22', '01/05/2010', '01/01/2020', 62000, N'có sẵn', 2, 4, '/')
-insert into Book values(N'Sách 23', '01/05/2010', '01/01/2020', 63000, N'có sẵn', 3, 5, '/')
-insert into Book values(N'Sách 24', '01/05/2010', '01/01/2020', 64000, N'có sẵn', 4, 1, '/')
-insert into Book values(N'Sách 25', '01/05/2010', '01/01/2020', 65000, N'có sẵn', 5, 2, '/')
-insert into Book values(N'Sách 26', '01/05/2010', '01/01/2020', 66000, N'có sẵn', 1, 3, '/')
-insert into Book values(N'Sách 27', '01/05/2010', '01/01/2020', 67000, N'có sẵn', 2, 4, '/')
-insert into Book values(N'Sách 28', '01/05/2010', '01/01/2020', 68000, N'có sẵn', 3, 5, '/')
-insert into Book values(N'Sách 29', '01/05/2010', '01/01/2020', 69000, N'có sẵn', 4, 1, '/')
-insert into Book values(N'Sách 30', '01/05/2010', '01/01/2020', 40000, N'có sẵn', 5, 2, '/')
-insert into Book values(N'Sách 31', '01/05/2010', '01/01/2020', 41000, N'có sẵn', 1, 3, '/')
-insert into Book values(N'Sách 32', '01/05/2010', '01/01/2020', 42000, N'có sẵn', 2, 4, '/')
-insert into Book values(N'Sách 33', '01/05/2010', '01/01/2020', 43000, N'có sẵn', 3, 5, '/')
+insert into Book values(N'Sách 1', '01/01/2010', '01/01/2020', 20000, N'có sẵn', 1, 1, '/','sach 1')
+insert into Book values(N'Sách 2', '01/02/2010', '01/01/2020', 30000, N'có sẵn', 2, 2, '/','sach 2')
+insert into Book values(N'Sách 3', '01/03/2010', '01/01/2020', 40000, N'có sẵn', 3, 3, '/','sach 3')
+insert into Book values(N'Sách 4', '01/04/2010', '01/01/2020', 50000, N'có sẵn', 4, 4, '/','sach 4')
+insert into Book values(N'Sách 5', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 5, 5, '/','sach 5')
+insert into Book values(N'Sách 6', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 1, 3, '/','sach 6')
+insert into Book values(N'Sách 7', '01/05/2010', '01/01/2020', 70000, N'có sẵn', 2, 4, '/','sach 7')
+insert into Book values(N'Sách 8', '01/05/2010', '01/01/2020', 80000, N'có sẵn', 3, 5, '/','sach 8')
+insert into Book values(N'Sách 9', '01/05/2010', '01/01/2020', 90000, N'có sẵn', 4, 1, '/','sach 9')
+insert into Book values(N'Sách 10', '01/05/2010', '01/01/2020', 100000, N'có sẵn', 5, 2, '/','sach 10')
+insert into Book values(N'Sách 11', '01/05/2010', '01/01/2020', 110000, N'có sẵn', 1, 3, '/','sach 11')
+insert into Book values(N'Sách 12', '01/05/2010', '01/01/2020', 53000, N'có sẵn', 2, 4, '/','sach 12')
+insert into Book values(N'Sách 13', '01/05/2010', '01/01/2020', 54000, N'có sẵn', 3, 5, '/','sach 13')
+insert into Book values(N'Sách 14', '01/05/2010', '01/01/2020', 55000, N'có sẵn', 4, 1, '/','sach 14')
+insert into Book values(N'Sách 15', '01/05/2010', '01/01/2020', 56000, N'có sẵn', 5, 2, '/','sach 15')
+insert into Book values(N'Sách 16', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 1, 3, '/','sach 16')
+insert into Book values(N'Sách 17', '01/05/2010', '01/01/2020', 57000, N'có sẵn', 2, 4, '/','sach 17')
+insert into Book values(N'Sách 18', '01/05/2010', '01/01/2020', 58000, N'có sẵn', 3, 5, '/','sach 18')
+insert into Book values(N'Sách 19', '01/05/2010', '01/01/2020', 59000, N'có sẵn', 4, 1, '/','sach 19')
+insert into Book values(N'Sách 20', '01/05/2010', '01/01/2020', 60000, N'có sẵn', 5, 2, '/','sach 20')
+insert into Book values(N'Sách 21', '01/05/2010', '01/01/2020', 61000, N'có sẵn', 1, 3, '/','sach 21')
+insert into Book values(N'Sách 22', '01/05/2010', '01/01/2020', 62000, N'có sẵn', 2, 4, '/','sach 22')
+insert into Book values(N'Sách 23', '01/05/2010', '01/01/2020', 63000, N'có sẵn', 3, 5, '/','sach 23')
+insert into Book values(N'Sách 24', '01/05/2010', '01/01/2020', 64000, N'có sẵn', 4, 1, '/','sach 24')
+insert into Book values(N'Sách 25', '01/05/2010', '01/01/2020', 65000, N'có sẵn', 5, 2, '/','sach 25')
+insert into Book values(N'Sách 26', '01/05/2010', '01/01/2020', 66000, N'có sẵn', 1, 3, '/','sach 26')
+insert into Book values(N'Sách 27', '01/05/2010', '01/01/2020', 67000, N'có sẵn', 2, 4, '/','sach 27')
+insert into Book values(N'Sách 28', '01/05/2010', '01/01/2020', 68000, N'có sẵn', 3, 5, '/','sach 28')
+insert into Book values(N'Sách 29', '01/05/2010', '01/01/2020', 69000, N'có sẵn', 4, 1, '/','sach 29')
+insert into Book values(N'Sách 30', '01/05/2010', '01/01/2020', 40000, N'có sẵn', 5, 2, '/','sach 30')
+insert into Book values(N'Sách 31', '01/05/2010', '01/01/2020', 41000, N'có sẵn', 1, 3, '/','sach 31')
+insert into Book values(N'Sách 32', '01/05/2010', '01/01/2020', 42000, N'có sẵn', 2, 4, '/','sach 32')
+insert into Book values(N'Sách 33', '01/05/2010', '01/01/2020', 43000, N'có sẵn', 3, 5, '/','sach 33')
 
 update Book
 set image = 'default-image.png' 
@@ -270,4 +275,4 @@ insert into Paramater values(N'dateBorrowMax', 4);
 insert into Permission values(N'Quản trị viên')
 insert into Permission values(N'Nhân viên')
 
-INSERT INTO Staff VALUES(N'Nguyễn Xuân Tú', '07/24/2000', N'Hà Tĩnh', '0965678164', 'admin', '2b2K2nI2Klrw29mD3odrmFoNmEo4kuoksTRuvOfMreNgQfhJ73QzhQxsvWJBGD7/dwJRPYnp8/fztPQamoZWNw==', 1)
+INSERT INTO Staff VALUES(N'Admin', '07/24/2000', N'Quảng Bình', '0965678164', 'admin', '2b2K2nI2Klrw29mD3odrmFoNmEo4kuoksTRuvOfMreNgQfhJ73QzhQxsvWJBGD7/dwJRPYnp8/fztPQamoZWNw==', 1,'admin')

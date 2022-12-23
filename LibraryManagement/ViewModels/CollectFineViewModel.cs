@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using LibraryManagement.Helpers;
 namespace LibraryManagement.ViewModels
 {
     class CollectFineViewModel : BaseViewModel
@@ -23,7 +23,7 @@ namespace LibraryManagement.ViewModels
         private Payment payment;
         private int collectedAmount;
         private string readerKeyword;
-        private Assets.Helper helper = new Assets.Helper();
+        private Helper helper = new Helper();
         /// <summary>
         /// Fefinition of properties
         /// </summary>
