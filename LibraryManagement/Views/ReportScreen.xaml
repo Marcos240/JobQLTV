@@ -14,6 +14,324 @@
 
     <Grid>
         <controls:MetroAnimatedTabControl x:Name="AnimatedTabControl">
+            <controls:MetroTabItem Header="Thống kê số lượng sách đang mượn" Height="40" Loaded="MetroTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <materialDesign:Card Grid.Row="0" Margin="20 20 20 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                            <ListView 
+                                      ItemsSource="{Binding BorrowList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                <ListView.View >
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Ngày mượn" DisplayMemberBinding="{Binding DateBorrow, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyy'}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số ngày mượn còn lại" DisplayMemberBinding="{Binding NumberDateBorrow, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Người mượn" DisplayMemberBinding="{Binding UserBorrow, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+
+                    <!--Xuất File excel-->
+                    <Button Background="DarkGreen"
+                            BorderThickness="0"
+                            Command="{Binding ExportBorrowingBook}"
+                            Grid.Row="1"
+                            Height="50"
+                            Padding="5"
+                            Width="160"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Xuất báo cáo ra file Excel"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 20 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Xuất Báo Cáo"
+                                            VerticalAlignment="Center"
+                                            Margin="0 0 5 0" />
+                            <materialDesign:PackIcon VerticalAlignment="Center"
+                                                            Kind="FileExcel"
+                                                            Width="20"
+                                                            Height="20" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </controls:MetroTabItem>
+            <controls:MetroTabItem Header="Top 10 sách được mượn nhiều" Height="40" Loaded="MetroTabItem_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <materialDesign:Card Grid.Row="0" Margin="20 20 20 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                            <ListView 
+                                      ItemsSource="{Binding Top10List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                <ListView.View >
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số lượng mượn" DisplayMemberBinding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+
+                    <!--Xuất File excel-->
+                    <Button Background="DarkGreen"
+                            BorderThickness="0"
+                            Command="{Binding ExportBestBook}"
+                            Grid.Row="1"
+                            Height="50"
+                            Padding="5"
+                            Width="160"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Xuất báo cáo ra file Excel"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 20 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Xuất Báo Cáo"
+                                            VerticalAlignment="Center"
+                                            Margin="0 0 5 0" />
+                            <materialDesign:PackIcon VerticalAlignment="Center"
+                                                            Kind="FileExcel"
+                                                            Width="20"
+                                                            Height="20" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </controls:MetroTabItem>
+            <controls:MetroTabItem Header="Thống kê số lượt mượn" Height="40">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                            Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Text="Chọn chế độ tìm kiếm"
+                               FontWeight="Bold"
+                               Margin="20 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchMode"
+                                    Loaded="searchMode_Loaded"
+                                    SelectionChanged="searchMode_SelectionChanged"
+                                    materialDesign:HintAssist.Hint="Chọn chế độ tìm kiếm"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo ngày-->
+                        <StackPanel
+                            Name="searchDayArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn ngày"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                Width="200">
+                                <DatePicker SelectedDate="{Binding SearchDate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                                    Name="searchDay"
+                                    materialDesign:HintAssist.Hint="Chọn ngày"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Height="35.2" >
+
+                                </DatePicker>
+                            </Border>
+
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo tháng-->
+                        <StackPanel
+                            Name="searchMonthArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn tháng"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchMonth"
+                                    Loaded="searchMonth_Loaded"
+                                    SelectedItem ="{Binding SearchMonth , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn tháng báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo quý-->
+                        <StackPanel
+                            Name="searchQuaterArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn quý"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchQuater"
+                                    Loaded="searchQuater_Loaded"
+                                    SelectedItem ="{Binding SearchQuarter , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn quý báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo năm-->
+                        <StackPanel
+                            Name="searchYearArea"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn quý"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchYear"
+                                    Loaded="searchYear_Loaded"
+                                    SelectedItem ="{Binding SearchYear , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn năm báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <materialDesign:Card Grid.Row="1" Margin="20 0 20 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                            <ListView 
+                                      ItemsSource="{Binding BorrowListByTime, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                <ListView.View >
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số lượng mượn" DisplayMemberBinding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+                    <!--Xuất File excel-->
+                    <Button Background="DarkGreen"
+                            BorderThickness="0"
+                            Command="{Binding ExportBorrowBookByTime}"
+                            Grid.Row="2"
+                            Height="50"
+                            Padding="5"
+                            Width="160"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Xuất báo cáo ra file Excel"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 20 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Xuất Báo Cáo"
+                                            VerticalAlignment="Center"
+                                            Margin="0 0 5 0" />
+                            <materialDesign:PackIcon VerticalAlignment="Center"
+                                                            Kind="FileExcel"
+                                                            Width="20"
+                                                            Height="20" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </controls:MetroTabItem>
             <controls:MetroTabItem Header="Thống kê mượn sách theo thể loại" Height="40">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -33,12 +351,43 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Tháng" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" >
                         </TextBlock>
-                        <ComboBox HorizontalContentAlignment="Center" Name="month" Loaded="month_Loaded" SelectedItem="{Binding Month, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Width="60"  VerticalAlignment="Center" HorizontalAlignment="Left">
-                        </ComboBox>
+
+                        <Border Grid.Column="1"
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Stretch">
+                            <ComboBox Name="month"
+                                Loaded="month_Loaded" SelectedItem="{Binding Month, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Width="60"  
+                                BorderThickness="0"
+                                Margin="4 0 0 0"
+                                FontSize="14"
+                                Padding="10">
+                            </ComboBox>
+                        </Border>
                         <TextBlock Grid.Column="2" Text="Năm" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" >
                         </TextBlock>
-                        <ComboBox HorizontalContentAlignment="Center" Name="year"  Loaded="year_Loaded" SelectedItem="{Binding Year,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Width="60"  VerticalAlignment="Center" HorizontalAlignment="Left">
-                        </ComboBox>
+                        <Border Grid.Column="3"
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 0 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Stretch">
+                            <ComboBox Name="year"  Loaded="year_Loaded" 
+                                SelectedItem="{Binding Year,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Width="70"  
+                                BorderThickness="0"
+                                Margin="4 0 0 0"
+                                FontSize="14"
+                                Padding="10">
+                            </ComboBox>
+                        </Border>
                         <Button x:Name="btnSearch"
                             Grid.Column="4"
                             Width="120"
@@ -51,18 +400,15 @@
                             <TextBlock Text="Thống kê" FontSize="15" />
                         </Button>
                     </Grid>
-
                     <Grid Grid.Row="1" Margin="10 0 10 0">
-
                         <materialDesign:Card
-                                             Background="#FFE3F0FF" Margin="20,10,10,10" 
-                                             BorderThickness="0" 
-                                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            Background="#FFE3F0FF" Margin="20,10,10,10" 
+                            BorderThickness="0" 
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
-                                          VerticalScrollBarVisibility="Auto">
+                                 VerticalScrollBarVisibility="Auto">
                                 <ListView Name="ListReportCategory" 
-                                          ItemsSource="{Binding Category_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                          >
+                                    ItemsSource="{Binding Category_List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                     <ListView.View >
                                         <GridView>
                                             <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
@@ -75,7 +421,6 @@
                             </ScrollViewer>
                         </materialDesign:Card>
                     </Grid>
-
                     <Grid Grid.Row="2" Margin="10 0 10 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -118,7 +463,6 @@
                 </Grid>
 
             </controls:MetroTabItem>
-
             <controls:MetroTabItem Header="Thống kê sách trả trễ" Height="40">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -134,11 +478,27 @@
                             <ColumnDefinition Width="382*"/>
                             <ColumnDefinition Width="165*"/>
                         </Grid.ColumnDefinitions>
-                        <DatePicker 
+
+
+                        <Border Grid.Column="0"
+                            BorderThickness="1"
+                            BorderBrush="#FFB1AEAE"
+                            CornerRadius="5"
+                            Margin="10 0 10 0"
+                            Padding="0 0 4 0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch">
+                            <DatePicker 
                             HorizontalContentAlignment="Center" Name="Day" 
-                            Loaded="day_Loaded"  Grid.Column="0" 
+                            Loaded="day_Loaded"  
                             SelectedDate="{ Binding DateExpired, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyyy'}" 
-                            Margin="10,32,0,32" HorizontalAlignment="Left" Width="100" Grid.ColumnSpan="2"/>
+                            BorderThickness="0"
+                            materialDesign:HintAssist.Hint="Chọn ngày"
+                            Margin="4 0 0 0"
+                            FontSize="14"
+                            Height="35.2"/>
+                        </Border>
+
                         <Button
                             Grid.Column="1"
                             Width="120"
@@ -173,105 +533,6 @@
                             BorderThickness="0"
                             Command="{Binding ExportLate}"
                             Grid.Row="2"
-                            Height="50"
-                            Padding="5"
-                            Width="160"
-                            materialDesign:ButtonAssist.CornerRadius="20"
-                            ToolTip="Xuất báo cáo ra file Excel"
-                            HorizontalAlignment="Right"
-                            Margin="0 0 20 0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Xuất Báo Cáo"
-                                            VerticalAlignment="Center"
-                                            Margin="0 0 5 0" />
-                            <materialDesign:PackIcon VerticalAlignment="Center"
-                                                            Kind="FileExcel"
-                                                            Width="20"
-                                                            Height="20" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Thống kê số lượng sách đang mượn" Height="40" Loaded="MetroTabItem_Loaded">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="8*"/>
-                        <RowDefinition Height="2*"/>
-                    </Grid.RowDefinitions>
-
-                    <materialDesign:Card Grid.Row="0" Margin="10 20 10 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
-                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
-                            <ListView 
-                                      ItemsSource="{Binding BorrowList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
-                                <ListView.View >
-                                    <GridView>
-                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
-                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Ngày mượn" DisplayMemberBinding="{Binding DateBorrow, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyy'}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Số ngày mượn còn lại" DisplayMemberBinding="{Binding NumberDateBorrow, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="người mượn" DisplayMemberBinding="{Binding UserBorrow, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </ScrollViewer>
-                    </materialDesign:Card>
-
-                    <!--Xuất File excel-->
-                    <Button Background="DarkGreen"
-                            BorderThickness="0"
-                            Command="{Binding ExportLate}"
-                            Grid.Row="1"
-                            Height="50"
-                            Padding="5"
-                            Width="160"
-                            materialDesign:ButtonAssist.CornerRadius="20"
-                            ToolTip="Xuất báo cáo ra file Excel"
-                            HorizontalAlignment="Right"
-                            Margin="0 0 20 0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Xuất Báo Cáo"
-                                            VerticalAlignment="Center"
-                                            Margin="0 0 5 0" />
-                            <materialDesign:PackIcon VerticalAlignment="Center"
-                                                            Kind="FileExcel"
-                                                            Width="20"
-                                                            Height="20" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </controls:MetroTabItem>
-            <controls:MetroTabItem Header="Top 10 sách được mượn nhiều" Height="40" Loaded="MetroTabItem_Loaded">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="8*"/>
-                        <RowDefinition Height="2*"/>
-                    </Grid.RowDefinitions>
-
-                    <materialDesign:Card Grid.Row="0" Margin="10 20 10 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
-                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
-                            <ListView 
-                                      ItemsSource="{Binding Top10List, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
-                                <ListView.View >
-                                    <GridView>
-                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
-                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding NameBook, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Loại sách" DisplayMemberBinding="{Binding NameCategory, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Nhà sản xuất" DisplayMemberBinding="{Binding PublisherName, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Ngày mượn" DisplayMemberBinding="{Binding DateBorrow, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyy'}"  Width="200"></GridViewColumn>
-                                        <GridViewColumn Header="Số lượng mượn" DisplayMemberBinding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </ScrollViewer>
-                    </materialDesign:Card>
-
-                    <!--Xuất File excel-->
-                    <Button Background="DarkGreen"
-                            BorderThickness="0"
-                            Command="{Binding ExportLate}"
-                            Grid.Row="1"
                             Height="50"
                             Padding="5"
                             Width="160"

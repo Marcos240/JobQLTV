@@ -21,10 +21,10 @@ namespace LibraryManagement.Models
                 instance = value;
             }
         }
-        public LibraryManagementEntities1 DB { get; set; }
+        public LibraryManagementEntities2 DB { get; set; }
         private DataAdapter()
         {
-            DB = new LibraryManagementEntities1();
+            DB = new LibraryManagementEntities2();
         }
     }
 }

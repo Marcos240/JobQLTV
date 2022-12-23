@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7d3863f103d64edd8f86f7f01c28fb6f" Name="Diagram1">
+      <Diagram DiagramId="33b998faca674abd8c04019915fdfa96" Name="Diagram1">
         <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.BillBorrow" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.BillReturn" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.Category" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.DetailBillBorrow" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.DetailBillReturn" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.Paramater" Width="1.5" PointX="2.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.Payment" Width="1.5" PointX="3" PointY="17.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Permission" Width="1.5" PointX="5.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Permission" Width="1.5" PointX="5.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.Publisher" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Reader" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Reader" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.Staff" Width="1.5" PointX="8" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.TypeReader" Width="1.5" PointX="1.5" PointY="15" IsExpanded="true" />
         <AssociationConnector Association="LibraryManagementModel.FK__BillBorro__idRea__33D4B598" ManuallyRouted="false" />
