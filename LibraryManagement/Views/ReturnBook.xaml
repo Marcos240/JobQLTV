@@ -213,7 +213,7 @@
                     VerticalAlignment="Stretch" 
                     HorizontalAlignment="Stretch" Margin="10" BorderThickness="1"
                     TextAlignment="Left" IsReadOnly="True" VerticalContentAlignment="Center"
-                    Grid.Row="2" Grid.Column="3" Text="{Binding BillReturn, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, Converter={StaticResource BillReturnToReaderDebt}}">
+                    Grid.Row="2" Grid.Column="3" Text="{Binding BillReturn, StringFormat={}{0:#,##0},NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, Converter={StaticResource BillReturnToReaderDebt}}">
                                 <TextBox.Resources>
                                     <Style TargetType="{x:Type Border}">
                                         <Setter Property="CornerRadius" Value="10"/>

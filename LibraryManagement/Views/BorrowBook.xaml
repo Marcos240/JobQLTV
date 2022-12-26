@@ -198,7 +198,7 @@
                                 </TextBox>
                             </Grid>
                             <Grid Grid.Row="4" Grid.Column="1">
-                                <TextBox  Foreground="Black" BorderThickness="1" Margin="8"  Text="{Binding ReaderSelected.debt}">
+                                <TextBox  Foreground="Black" BorderThickness="1" Margin="8"  Text="{Binding ReaderSelected.debt,StringFormat={}{0:#,##0}}">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="10"/>

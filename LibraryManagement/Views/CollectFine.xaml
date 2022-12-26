@@ -199,7 +199,7 @@
                     BorderThickness="1" Margin="8"
                     TextAlignment="Left"
                     Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center"
-                    Text="{Binding Payment.remainDebt}">
+                    Text="{Binding Payment.remainDebt,StringFormat={}{0:#,##0}}">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="10"/>
