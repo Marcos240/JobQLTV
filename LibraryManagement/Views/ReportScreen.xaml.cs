@@ -50,6 +50,7 @@ namespace LibraryManagement.Views
             Day.SelectedDate = DateTime.Today;
         }
 
+
         private void ScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
@@ -158,6 +159,99 @@ namespace LibraryManagement.Views
             for (int i = DateTime.Today.Year; i >= DateTime.Today.Year - 5; i--)
             {
                 searchYear.Items.Add(i);
+            }
+            //searchYear.SelectedIndex = 0;
+        }
+
+        private void searchModeLate_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchModeLate.Items.Clear();
+            searchModeLate.Items.Add("Theo ngày");
+            searchModeLate.Items.Add("Theo tháng");
+            searchModeLate.Items.Add("Theo quý");
+            searchModeLate.Items.Add("Theo năm");
+            searchModeLate.SelectedIndex = 0;
+        }
+
+        private void searchModeLate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (searchModeLate.SelectedIndex == 0)
+            {
+                searchDayLate.IsEnabled = true;
+                searchDayAreaLate.Visibility = Visibility.Visible;
+                searchMonthLate.IsEnabled = false;
+                searchMonthAreaLate.Visibility = Visibility.Hidden;
+                searchQuaterLate.IsEnabled = false;
+                searchQuaterAreaLate.Visibility = Visibility.Hidden;
+                searchYearLate.IsEnabled = false;
+                searchYearAreaLate.Visibility = Visibility.Hidden;
+            }
+            else if (searchModeLate.SelectedIndex == 1)
+            {
+                searchDayLate.IsEnabled = false;
+                searchDayAreaLate.Visibility = Visibility.Hidden;
+                searchMonthLate.IsEnabled = true;
+                searchMonthAreaLate.Visibility = Visibility.Visible;
+                searchQuaterLate.IsEnabled = false;
+                searchQuaterAreaLate.Visibility = Visibility.Hidden;
+                searchYearLate.IsEnabled = false;
+                searchYearAreaLate.Visibility = Visibility.Hidden;
+            }
+            else if (searchModeLate.SelectedIndex == 2)
+            {
+                searchDayLate.IsEnabled = false;
+                searchDayAreaLate.Visibility = Visibility.Hidden;
+                searchMonthLate.IsEnabled = false;
+                searchMonthAreaLate.Visibility = Visibility.Hidden;
+                searchQuaterLate.IsEnabled = true;
+                searchQuaterAreaLate.Visibility = Visibility.Visible;
+                searchYearLate.IsEnabled = false;
+                searchYearAreaLate.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                searchDayLate.IsEnabled = false;
+                searchDayAreaLate.Visibility = Visibility.Hidden;
+                searchMonthLate.IsEnabled = false;
+                searchMonthAreaLate.Visibility = Visibility.Hidden;
+                searchQuaterLate.IsEnabled = false;
+                searchQuaterAreaLate.Visibility = Visibility.Hidden;
+                searchYearLate.IsEnabled = true;
+                searchYearAreaLate.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void searchMonthLate_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchMonthLate.Items.Clear();
+            for (int i = 1; i <= 12; i++)
+            {
+                searchMonthLate.Items.Add(i);
+            }
+            //searchMonth.SelectedIndex = DateTime.Today.Month - 1;
+        }
+
+        private void searchDayLate_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchDayLate.SelectedDate = DateTime.Now;
+        }
+
+        private void searchQuaterLate_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchQuaterLate.Items.Clear();
+            for (int i = 1; i <= 4; i++)
+            {
+                searchQuaterLate.Items.Add(i);
+            }
+            //searchQuater.SelectedIndex = (DateTime.Today.Month + 2)/3 - 1;
+        }
+
+        private void searchYearLate_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchYearLate.Items.Clear();
+            for (int i = DateTime.Today.Year; i >= DateTime.Today.Year - 5; i--)
+            {
+                searchYearLate.Items.Add(i);
             }
             //searchYear.SelectedIndex = 0;
         }

@@ -34,6 +34,13 @@ namespace LibraryManagement.ViewModels
         private int _searchQuarter;
         private int _searchYear;
 
+        //public property for Paymentdebt
+        private DateTime _searchDateLate;
+        private int _searchMonthLate;
+        private int _searchQuarterLate;
+        private int _searchYearLate;
+        public int _sumDebt;  
+
         // public property for borrowbook list by time
         public DateTime SearchDate
         {
@@ -82,6 +89,56 @@ namespace LibraryManagement.ViewModels
             }
         }
 
+        // public property for Paymentdebt
+        public DateTime SearchDateLate
+        {
+            get => _searchDateLate;
+            set
+            {
+                _searchDateLate = value;
+                OnPropertyChanged();
+                getDebtReportByTime(SearchDateLate, SearchDateLate.AddDays(1));
+            }
+        }
+        public int SearchMonthLate
+        {
+            get => _searchMonthLate;
+            set
+            {
+                _searchMonthLate = value;
+                OnPropertyChanged();
+                var firstDayOfMonth = new DateTime(DateTime.Today.Year, SearchMonthLate, 1);
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                getDebtReportByTime(firstDayOfMonth, lastDayOfMonth);
+            }
+        }
+        public int SearchQuarterLate
+        {
+            get => _searchQuarterLate;
+            set
+            {
+                _searchQuarterLate = value;
+                OnPropertyChanged();
+                DateTime firstDayOfQuarter = new DateTime(DateTime.Today.Year, 3 * SearchQuarterLate - 2, 1);
+                DateTime lastDayOfQuarter = firstDayOfQuarter.AddMonths(3).AddDays(-1);
+                getDebtReportByTime(firstDayOfQuarter, lastDayOfQuarter);
+            }
+        }
+        public int SearchYearLate
+        {
+            get => _searchYearLate;
+            set
+            {
+                _searchYearLate = value;
+                OnPropertyChanged();
+                DateTime firstDay = new DateTime(SearchYearLate, 1, 1);
+                DateTime lastDay = new DateTime(SearchYearLate, 12, 31);
+                getDebtReportByTime(firstDay, lastDay);
+            }
+        }
+
+        public int SumDebt { get => _sumDebt; set { _sumDebt = value; OnPropertyChanged(); } }
+
 
         //Danh sách thể loại
         private ObservableCollection<ReportCategory> _ListCategory;
@@ -98,6 +155,10 @@ namespace LibraryManagement.ViewModels
         private ObservableCollection<BorrowBookDetail> _borrowListByTime;
         public ObservableCollection<BorrowBookDetail> BorrowListByTime { get => _borrowListByTime; set { _borrowListByTime = value; OnPropertyChanged();  } }
 
+        //Danh sách thống kê số tiền thu PHẠT
+        private ObservableCollection<PaymentDebt> _paymentDebtListByTime;
+        public ObservableCollection<PaymentDebt> PaymentDebtListByTime { get => _paymentDebtListByTime; set { _paymentDebtListByTime = value; OnPropertyChanged(); } }
+
         private ObservableCollection<BorrowBookDetail> _top10List;
         public ObservableCollection<BorrowBookDetail> Top10List { get => _top10List; set { _top10List = value; OnPropertyChanged(); } }
 
@@ -107,6 +168,7 @@ namespace LibraryManagement.ViewModels
         public AppCommand<object> ExportBorrowingBook { get; set; }
         public AppCommand<object> ExportBestBook { get; set; }
         public AppCommand<object> ExportBorrowBookByTime { get; set; }
+        public AppCommand<object> ExportPaymentDebtByTime { get; set; }
         public AppCommand<object> ReloadReport { get; set; }
         // public AppCommand<object>  LoadReportBorrow { get; set; }
 
@@ -114,6 +176,9 @@ namespace LibraryManagement.ViewModels
         {
             // init data
             SearchDate = DateTime.Now;
+            SearchDateLate = DateTime.Now;
+            SumBorrow = 0;
+            SumDebt = 0;
             //Report Book borow with category
             Category_List = new ObservableCollection<ReportCategory>();
             var categoryList = DataAdapter.Instance.DB.Categories;
@@ -1000,7 +1065,7 @@ namespace LibraryManagement.ViewModels
                     }
                 });
 
-            //Export Excel brrow book by time
+            //Export Excel borrow book by time
             ExportBorrowBookByTime = new AppCommand<object>(
                 param => true,
                 param =>
@@ -1157,6 +1222,166 @@ namespace LibraryManagement.ViewModels
                     }
                 });
 
+            //Export Excel payment debt by time
+            ExportPaymentDebtByTime = new AppCommand<object>(
+                param => true,
+                param =>
+                {
+                    try
+                    {
+                        string filePath = "";
+                        // tạo SaveFileDialog để lưu file excel
+                        SaveFileDialog dialog = new SaveFileDialog();
+
+                        // chỉ lọc ra các file có định dạng Excel
+                        dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
+
+                        // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+                        if (dialog.ShowDialog() == true)
+                        {
+                            filePath = dialog.FileName;
+                        }
+
+                        // nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
+                        if (string.IsNullOrEmpty(filePath))
+                        {
+                            return;
+                        }
+
+                        ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+                        // If you use EPPlus in a noncommercial context
+                        // according to the Polyform Noncommercial license:
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        using (ExcelPackage p = new ExcelPackage())
+                        {
+                            // đặt tên người tạo file
+                            p.Workbook.Properties.Author = "Team";
+
+                            // đặt tiêu đề cho file
+                            p.Workbook.Properties.Title = "Báo cáo thống kê số tiền phạt đã thu theo thời gian";
+
+                            //Tạo một sheet để làm việc trên đó
+                            p.Workbook.Worksheets.Add("Report LibraryManagement");
+
+
+                            // lấy sheet vừa add ra để thao tác
+                            ExcelWorksheet ws = p.Workbook.Worksheets["Report LibraryManagement"];
+
+                            // đặt tên cho sheet
+                            ws.Name = "Report LibraryManagement";
+                            // fontsize mặc định cho cả sheet
+                            ws.Cells.Style.Font.Size = 11;
+                            // font family mặc định cho cả sheet
+                            ws.Cells.Style.Font.Name = "Calibri";
+
+                            // Tạo danh sách các column header
+                            string[] arrColumnHeader = {
+                                                    "STT",
+                                                    "Tên độc giả",
+                                                    "Số tiền thanh toán",
+                                                    "Ngày thanh toán"
+                    };
+
+                            // lấy ra số lượng cột cần dùng dựa vào số lượng header
+                            var countColHeader = arrColumnHeader.Count();
+
+                            // merge các column lại từ column 1 đến số column header
+                            ws.Cells[1, 1].Value = "Báo cáo thống kê số tiền phạt đã thu theo thời gian";
+                            ws.Cells[1, 1, 1, countColHeader].Merge = true;
+                            // in đậm
+                            ws.Cells[1, 1, 1, countColHeader].Style.Font.Bold = true;
+                            // căn giữa
+                            ws.Cells[1, 1, 1, countColHeader].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                            //Ngày xuất báo cáo
+                            ws.Cells[2, 1].Value = "Ngày xuất báo cáo: " + DateTime.Today.ToShortDateString();
+                            ws.Cells[2, 1, 2, countColHeader].Merge = true;
+                            // in đậm
+                            ws.Cells[2, 1, 2, countColHeader].Style.Font.Bold = true;
+                            // căn giữa
+                            ws.Cells[2, 1, 2, countColHeader].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                            //Tổng số tiền nợ đã thu
+                            ws.Cells[3, 1].Value = "Tổng số tiền nợ đã thu: " + SumDebt;
+                            ws.Cells[3, 1, 3, countColHeader].Merge = true;
+                            // in đậm
+                            ws.Cells[3, 1, 3, countColHeader].Style.Font.Bold = true;
+                            // căn giữa
+                            ws.Cells[3, 1, 3, countColHeader].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                            int colIndex = 1;
+                            int rowIndex = 4;
+
+                            ws.Column(1).Width = 25;
+                            ws.Column(2).Width = 25;
+                            ws.Column(3).Width = 25;
+                            ws.Column(4).Width = 25;
+                            //tạo các header từ column header đã tạo từ bên trên
+                            foreach (var item in arrColumnHeader)
+                            {
+                                var cell = ws.Cells[rowIndex, colIndex];
+                                ws.Cells[rowIndex, colIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+
+                                //set màu thành gray
+                                var fill = cell.Style.Fill;
+                                fill.PatternType = ExcelFillStyle.Solid;
+                                fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+
+                                //căn chỉnh các border
+                                var border = cell.Style.Border;
+                                border.Bottom.Style =
+                                    border.Top.Style =
+                                    border.Left.Style =
+                                    border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //gán giá trị
+                                cell.Value = item;
+
+                                colIndex++;
+                            }
+
+                            //lấy ra danh sách ListCategory từ ItemSource của DataGrid
+                            List<PaymentDebt> ListCate = PaymentDebtListByTime.Cast<PaymentDebt>().ToList();
+
+                            //với mỗi item trong danh sách sẽ ghi trên 1 dòng
+                            foreach (var item in ListCate)
+                            {
+                                // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                                colIndex = 1;
+
+                                // rowIndex tương ứng từng dòng dữ liệu
+                                rowIndex++;
+
+                                //gán giá trị cho từng cell      
+                                ws.Cells[rowIndex, colIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                ws.Cells[rowIndex, colIndex++].Value = item.No;
+
+                                ws.Cells[rowIndex, colIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                ws.Cells[rowIndex, colIndex++].Value = item.NameReader;
+
+                                ws.Cells[rowIndex, colIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                ws.Cells[rowIndex, colIndex++].Value = item.CollectedAmount;
+
+                                ws.Cells[rowIndex, colIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                ws.Cells[rowIndex, colIndex++].Value = item.PaymentDate.ToShortDateString();
+
+                            }
+
+                            //Lưu file lại
+                            Byte[] bin = p.GetAsByteArray();
+                            File.WriteAllBytes(filePath, bin);
+                        }
+                        MessageBox.Show("Xuất excel thành công!");
+                    }
+                    catch (Exception EE)
+                    {
+                        MessageBox.Show(EE.Message);
+                        MessageBox.Show("Có lỗi khi lưu file");
+                    }
+                });
+
             ReloadReport = new AppCommand<object>((p) =>
                 {
                     return true;
@@ -1166,6 +1391,7 @@ namespace LibraryManagement.ViewModels
                     init();
                     getTop10();
                     getBookReportByTime(DateTime.Today,DateTime.Today.AddDays(1));
+                    getDebtReportByTime(DateTime.Today, DateTime.Today.AddDays(1));
                 });
         }
         // End Report Book return late 
@@ -1261,6 +1487,44 @@ namespace LibraryManagement.ViewModels
                                 .ToList();
 
             BorrowListByTime = new ObservableCollection<BorrowBookDetail>(BorrowBookLst);
+        }
+
+        private void getDebtReportByTime(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                var DebtLst = (from r in DataAdapter.Instance.DB.Readers
+                               join p in DataAdapter.Instance.DB.Payments on r.idReader equals p.idReader
+                               select new
+                               {
+                                   IdReader = r.idReader,
+                                   NameReader = r.nameReader,
+                                   CollectedAmount = p.collectedAmount,
+                                   PaymentDate = p.paymentDate,
+                               }
+                                ).Where((item) => fromDate <= item.PaymentDate && item.PaymentDate <= toDate)
+                                .AsEnumerable()
+                                .Select((item, index) => new PaymentDebt
+                                {
+                                    No = index + 1,
+                                    IdReader = item.IdReader,
+                                    NameReader = item.NameReader,
+                                    CollectedAmount = item.CollectedAmount,
+                                    PaymentDate = item.PaymentDate
+                                })
+                                .ToList();
+                if (DebtLst!=null && DebtLst.Count() > 0)
+                {
+                    SumDebt = DebtLst.Sum(item => item.CollectedAmount);
+                }    
+                PaymentDebtListByTime = new ObservableCollection<PaymentDebt>(DebtLst);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            
         }
     }
 

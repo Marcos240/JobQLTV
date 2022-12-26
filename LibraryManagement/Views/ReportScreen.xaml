@@ -14,7 +14,7 @@
 
     <Grid>
         <controls:MetroAnimatedTabControl x:Name="AnimatedTabControl">
-            <controls:MetroTabItem Header="Thống kê số lượng sách đang mượn" Height="40" Loaded="MetroTabItem_Loaded">
+            <controls:MetroTabItem Header="Số lượng sách đang mượn" Height="40" Loaded="MetroTabItem_Loaded">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="8*"/>
@@ -330,6 +330,251 @@
                                                             Height="20" />
                         </StackPanel>
                     </Button>
+                </Grid>
+            </controls:MetroTabItem>
+            <controls:MetroTabItem Header="Thống kê số tiền PHẠT" Height="40">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                            Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Text="Chọn chế độ tìm kiếm"
+                               FontWeight="Bold"
+                               Margin="20 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchModeLate"
+                                    Loaded="searchModeLate_Loaded"
+                                    SelectionChanged="searchModeLate_SelectionChanged"
+                                    materialDesign:HintAssist.Hint="Chọn chế độ tìm kiếm"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo ngày-->
+                        <StackPanel
+                            Name="searchDayAreaLate"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn ngày"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center"
+                                Width="200">
+                                <DatePicker SelectedDate="{Binding SearchDateLate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                                    Name="searchDayLate"
+                                    materialDesign:HintAssist.Hint="Chọn ngày"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Height="35.2" >
+
+                                </DatePicker>
+                            </Border>
+
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo tháng-->
+                        <StackPanel
+                            Name="searchMonthAreaLate"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn tháng"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchMonthLate"
+                                    Loaded="searchMonthLate_Loaded"
+                                    SelectedItem ="{Binding SearchMonthLate , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn tháng báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo quý-->
+                        <StackPanel
+                            Name="searchQuaterAreaLate"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn quý"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchQuaterLate"
+                                    Loaded="searchQuaterLate_Loaded"
+                                    SelectedItem ="{Binding SearchQuarterLate , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn quý báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+
+                        <!--Chọn báo cáo theo năm-->
+                        <StackPanel
+                            Name="searchYearAreaLate"
+                            Visibility="Hidden"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBlock Text="Chọn quý"
+                               FontWeight="Bold"
+                               Margin="10 0 0 8"
+                               VerticalAlignment="Center"
+                               FontSize="12">
+                            </TextBlock>
+
+                            <Border 
+                                BorderThickness="1"
+                                BorderBrush="#FFB1AEAE"
+                                CornerRadius="5"
+                                Margin="10 0 10 0"
+                                Padding="0 0 4 0"
+                                VerticalAlignment="Center" >
+                                <ComboBox 
+                                    Name="searchYearLate"
+                                    Loaded="searchYearLate_Loaded"
+                                    SelectedItem ="{Binding SearchYearLate , Mode=TwoWay}"
+                                    materialDesign:HintAssist.Hint="Chọn năm báo cáo"
+                                    BorderThickness="0"
+                                    Margin="4 0 0 0"
+                                    FontSize="14"
+                                    Padding="10">
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <materialDesign:Card Grid.Row="1" Margin="20 0 20 0" Background="#FFE3F0FF" BorderThickness="0" VerticalAlignment="Stretch" Grid.ColumnSpan="5">
+                        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel_1" VerticalScrollBarVisibility="Auto">
+                            <ListView 
+                                      ItemsSource="{Binding PaymentDebtListByTime, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+                                <ListView.View >
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding No, UpdateSourceTrigger=PropertyChanged }"></GridViewColumn>
+                                        <GridViewColumn Header="Tên độc giả" DisplayMemberBinding="{Binding NameReader, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Số tiền thanh toán" DisplayMemberBinding="{Binding CollectedAmount, StringFormat={}{0:#,##0}, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                        <GridViewColumn Header="Ngày thanh toán" DisplayMemberBinding="{Binding PaymentDate, UpdateSourceTrigger=PropertyChanged}"  Width="200"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+
+                    <Grid Grid.Row="2" Margin="10 0 10 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Label Foreground="Black" Content="Tổng số tiền phạt" FontSize="16" VerticalAlignment="Center" FontWeight="Bold" Height="30" Margin="20 0" />
+                            <TextBox TextAlignment="Center" 
+                                     IsReadOnly="True" Foreground="Black" 
+                                     x:Name="sumDebt" Grid.Column="1" BorderThickness="1" 
+                                     Text="{Binding SumDebt, StringFormat={}{0:#,##0} đ, UpdateSourceTrigger=PropertyChanged}" 
+                                     FontSize="20" Height="44" Width="200"
+                                     FontWeight="Bold"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     IsEnabled="False">
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                        </StackPanel>
+                        <!--Xuất File excel-->
+                        <Button Background="DarkGreen"
+                            BorderThickness="0"
+                            Command="{Binding ExportPaymentDebtByTime}"
+                            Grid.Column="2"
+                            Height="50"
+                            Padding="5"
+                            Width="160"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Xuất báo cáo ra file Excel"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 20 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Xuất Báo Cáo"
+                                            VerticalAlignment="Center"
+                                            Margin="0 0 5 0" />
+                                <materialDesign:PackIcon VerticalAlignment="Center"
+                                                            Kind="FileExcel"
+                                                            Width="20"
+                                                            Height="20" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    
                 </Grid>
             </controls:MetroTabItem>
             <controls:MetroTabItem Header="Thống kê mượn sách theo thể loại" Height="40">

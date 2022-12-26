@@ -213,7 +213,7 @@ namespace LibraryManagement.ViewModels
                 SelectedAuthor = null;
                 ListAuthors = new ObservableCollection<Author>();
                 dateAddBook = DateTime.Now;
-                dateManufacture = new DateTime(2000, 1, 1);
+                dateManufacture = new DateTime(2022, 1, 1);
                 price = 0;
                 BookImageCover = null;
                 wd.ShowDialog();
