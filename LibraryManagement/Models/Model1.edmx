@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LibraryManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="LibraryManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Author">
           <Key>
             <PropertyRef Name="idAuthor" />
@@ -389,7 +389,8 @@
             <End Role="Staff" EntitySet="Staff" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LibraryManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -436,12 +437,12 @@
           <Property Name="idCategory" Type="Int32" Nullable="false" />
           <Property Name="idPublisher" Type="Int32" Nullable="false" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="nameBookSearch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Book__idCategory__2D27B809" FromRole="Book" ToRole="Category" />
           <NavigationProperty Name="Publisher" Relationship="Self.FK__Book__idPublishe__2E1BDC42" FromRole="Book" ToRole="Publisher" />
           <NavigationProperty Name="DetailBillBorrows" Relationship="Self.FK__DetailBil__idBoo__31EC6D26" FromRole="Book" ToRole="DetailBillBorrow" />
           <NavigationProperty Name="DetailBillReturns" Relationship="Self.FK__DetailBil__idBoo__34C8D9D1" FromRole="Book" ToRole="DetailBillReturn" />
           <NavigationProperty Name="Authors" Relationship="Self.Compose" FromRole="Book" ToRole="Author" />
-          <Property Name="nameBookSearch" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -525,11 +526,11 @@
           <Property Name="debt" Type="Int32" Nullable="false" />
           <Property Name="latestExtended" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="idTypeReader" Type="Int32" Nullable="false" />
+          <Property Name="nameReaderSearch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="BillBorrows" Relationship="Self.FK__BillBorro__idRea__33D4B598" FromRole="Reader" ToRole="BillBorrow" />
           <NavigationProperty Name="BillReturns" Relationship="Self.FK__BillRetur__idRea__37A5467C" FromRole="Reader" ToRole="BillReturn" />
           <NavigationProperty Name="Payments" Relationship="Self.FK__Payment__idReade__38996AB5" FromRole="Reader" ToRole="Payment" />
           <NavigationProperty Name="TypeReader" Relationship="Self.FK__Reader__idTypeRe__2C3393D0" FromRole="Reader" ToRole="TypeReader" />
-          <Property Name="nameReaderSearch" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -543,8 +544,8 @@
           <Property Name="accountStaff" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="passwordStaff" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idPermission" Type="Int32" Nullable="false" />
+          <Property Name="nameStaffSearch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Permission" Relationship="Self.FK__Staff__idPermiss__30F848ED" FromRole="Staff" ToRole="Permission" />
-          <Property Name="nameStaffSearch" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TypeReader">
           <Key>
@@ -702,7 +703,7 @@
           <End Role="Author" Type="Self.Author" Multiplicity="*" />
           <End Role="Book" Type="Self.Book" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="LibraryManagementEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="LibraryManagementEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="BillBorrows" EntityType="Self.BillBorrow" />
           <EntitySet Name="BillReturns" EntityType="Self.BillReturn" />
@@ -775,7 +776,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LibraryManagementModelStoreContainer" CdmEntityContainer="LibraryManagementEntities1">
+        <EntityContainerMapping StorageEntityContainer="LibraryManagementModelStoreContainer" CdmEntityContainer="LibraryManagementEntities2">
           <EntitySetMapping Name="Authors">
             <EntityTypeMapping TypeName="LibraryManagementModel.Author">
               <MappingFragment StoreEntitySet="Author">
@@ -806,7 +807,6 @@
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="LibraryManagementModel.Book">
               <MappingFragment StoreEntitySet="Book">
-                <ScalarProperty Name="nameBookSearch" ColumnName="nameBookSearch" />
                 <ScalarProperty Name="idBook" ColumnName="idBook" />
                 <ScalarProperty Name="nameBook" ColumnName="nameBook" />
                 <ScalarProperty Name="dateManufacture" ColumnName="dateManufacture" />
@@ -816,6 +816,7 @@
                 <ScalarProperty Name="idCategory" ColumnName="idCategory" />
                 <ScalarProperty Name="idPublisher" ColumnName="idPublisher" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="nameBookSearch" ColumnName="nameBookSearch" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -889,7 +890,6 @@
           <EntitySetMapping Name="Readers">
             <EntityTypeMapping TypeName="LibraryManagementModel.Reader">
               <MappingFragment StoreEntitySet="Reader">
-                <ScalarProperty Name="nameReaderSearch" ColumnName="nameReaderSearch" />
                 <ScalarProperty Name="idReader" ColumnName="idReader" />
                 <ScalarProperty Name="nameReader" ColumnName="nameReader" />
                 <ScalarProperty Name="dobReader" ColumnName="dobReader" />
@@ -899,13 +899,13 @@
                 <ScalarProperty Name="debt" ColumnName="debt" />
                 <ScalarProperty Name="latestExtended" ColumnName="latestExtended" />
                 <ScalarProperty Name="idTypeReader" ColumnName="idTypeReader" />
+                <ScalarProperty Name="nameReaderSearch" ColumnName="nameReaderSearch" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="LibraryManagementModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
-                <ScalarProperty Name="nameStaffSearch" ColumnName="nameStaffSearch" />
                 <ScalarProperty Name="idStaff" ColumnName="idStaff" />
                 <ScalarProperty Name="nameStaff" ColumnName="nameStaff" />
                 <ScalarProperty Name="dobStaff" ColumnName="dobStaff" />
@@ -914,6 +914,7 @@
                 <ScalarProperty Name="accountStaff" ColumnName="accountStaff" />
                 <ScalarProperty Name="passwordStaff" ColumnName="passwordStaff" />
                 <ScalarProperty Name="idPermission" ColumnName="idPermission" />
+                <ScalarProperty Name="nameStaffSearch" ColumnName="nameStaffSearch" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
