@@ -188,6 +188,7 @@
                             </TextBox.Resources>
                             <TextBox.Text>
                                 <Binding Path="price"
+                                    StringFormat="{}{0:#,##0}"
                                     UpdateSourceTrigger="PropertyChanged" >
                                     <Binding.ValidationRules>
                                         <vm:PriceValidation/>

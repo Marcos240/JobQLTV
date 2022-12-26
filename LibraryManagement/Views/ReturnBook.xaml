@@ -44,7 +44,7 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding email}"/>
                             <DataGridTextColumn Header="Địa chỉ" Binding="{Binding addressReader}"/>
                             <DataGridTextColumn Header="Ngày tạo" Binding="{Binding createdAt}"/>
-                            <DataGridTextColumn Header="Nợ" Binding="{Binding debt}"/>
+                            <DataGridTextColumn Header="Nợ" Binding="{Binding debt,  StringFormat={}{0:#,##0}}"/>
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -202,7 +202,7 @@
                     HorizontalAlignment="Stretch"
                    Margin="10" BorderThickness="1"
                     TextAlignment="Left" IsReadOnly="True" VerticalContentAlignment="Center"
-                    Grid.Row="1" Grid.Column="3" Text="{Binding BillReturn.sumFine}">
+                    Grid.Row="1" Grid.Column="3" Text="{Binding BillReturn.sumFine,  StringFormat={}{0:#,##0} }">
                                 <TextBox.Resources>
                                     <Style TargetType="{x:Type Border}">
                                         <Setter Property="CornerRadius" Value="10"/>

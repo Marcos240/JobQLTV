@@ -50,7 +50,7 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding email}"/>
                             <DataGridTextColumn Header="Địa chỉ" Binding="{Binding addressReader}"/>
                             <DataGridTextColumn Header="Ngày tạo" Binding="{Binding createdAt}"/>
-                            <DataGridTextColumn Header="Nợ" Binding="{Binding debt}"/>
+                            <DataGridTextColumn Header="Nợ" Binding="{Binding debt,  StringFormat={}{0:#,##0}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </ScrollViewer>
@@ -97,7 +97,7 @@
                             <DataGridTextColumn Header="STT" Binding="{Binding idBook}"/>
                             <DataGridTextColumn Header="Tên sách" Binding="{Binding nameBook}"/>
                             <DataGridTextColumn Header="Năm Xuất bản" Binding="{Binding dateManufacture.Year}"/>
-                            <DataGridTextColumn Header="Giá" Binding="{Binding price}"/>
+                            <DataGridTextColumn Header="Giá" Binding="{Binding price,   StringFormat={}{0:#,##0}}"/>
                             <DataGridTextColumn Header="Trạng thái" Binding="{Binding statusBook}"/>
                             <DataGridTextColumn Header="Thể loại" Binding="{Binding Category.nameCategory}"/>
                             <DataGridTextColumn Header="Tác giả" Binding="{Binding Authors, Converter={StaticResource AuthorsConverter}}"/>

@@ -170,10 +170,8 @@
                                 </Style>
                             </TextBox.Resources>
                             <TextBox.Text>
-                                <Binding Path="SelectedItem.price" UpdateSourceTrigger="PropertyChanged" >
-                                    <Binding.ValidationRules>
-                                        <vm:PriceValidation/>
-                                    </Binding.ValidationRules>
+                                <Binding Path="SelectedItem.price" UpdateSourceTrigger="PropertyChanged"  StringFormat="{}{0:#,##0}" >
+                                    
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
@@ -292,7 +290,7 @@
                                 <GridViewColumn Header="Tác giả" DisplayMemberBinding="{Binding Authors, Converter={StaticResource AuthorsConverter}}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày XB" DisplayMemberBinding="{Binding dateManufacture.Date}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày nhập" DisplayMemberBinding="{Binding dateAddBook.Date}"></GridViewColumn>
-                                <GridViewColumn Header="Giá" DisplayMemberBinding="{Binding price}"></GridViewColumn>
+                                <GridViewColumn Header="Giá" DisplayMemberBinding="{Binding price,StringFormat={}{0:#,##0}}"></GridViewColumn>
                                 <GridViewColumn Header="Trạng thái" DisplayMemberBinding="{Binding statusBook}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
