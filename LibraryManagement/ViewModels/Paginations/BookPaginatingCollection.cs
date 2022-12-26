@@ -124,7 +124,7 @@ namespace LibraryManagement.ViewModels
             else
             {
                 totalItems = DataAdapter.Instance.DB.Books
-                    .Where(book => book.nameBook.ToLower().StartsWith(keyword.ToLower())).Count();
+                    .Where(book => book.nameBook.ToLower().Contains(keyword.ToLower())).Count();
             }
             this.PageCount = 1 + (totalItems - 1) / this.ItemsPerPage;
         }

@@ -60,7 +60,7 @@ namespace LibraryManagement.ViewModels
             try
             {
                 var ReadersInPage = DataAdapter.Instance.DB.Readers
-                    .Where(reader => reader.nameReaderSearch.ToLower().StartsWith(keyword.ToLower()))
+                    .Where(reader => reader.nameReaderSearch.ToLower().Contains(keyword.ToLower()))
                     .OrderBy(el => el.idReader)
                     .Skip((CurrentPage - 1) * ItemsPerPage)
                     .Take(items);
@@ -123,7 +123,7 @@ namespace LibraryManagement.ViewModels
             else
             {
                 totalItems = DataAdapter.Instance.DB.Readers
-                    .Where(reader => reader.nameReader.ToLower().StartsWith(keyword.ToLower())).Count();
+                    .Where(reader => reader.nameReader.ToLower().Contains(keyword.ToLower())).Count();
             }
             this.PageCount = 1 + (totalItems - 1) / this.ItemsPerPage;
         }
