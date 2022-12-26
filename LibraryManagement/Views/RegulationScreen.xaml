@@ -198,10 +198,9 @@
                     </TextBox.Resources>
                     <TextBox.Text>
                         <Binding Path="moneyPenalty"
+                                   StringFormat="{}{0:#,##0}"
                         UpdateSourceTrigger="PropertyChanged" >
-                            <Binding.ValidationRules>
-                                <vm:MoneyPenaltyValidation/>
-                            </Binding.ValidationRules>
+                           
                         </Binding>
                     </TextBox.Text>
                     <TextBox.IsReadOnly>

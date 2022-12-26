@@ -182,22 +182,7 @@ namespace LibraryManagement.ViewModels
                     {
                         MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
                     }
-                    catch (DbEntityValidationException)
-                    {
-                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
-                    }
-                    catch (NotSupportedException)
-                    {
-                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        MessageBox.Show("Không thể thao tác vì lỗi cơ sở dữ liệu!");
-                    }
+                    
                     finally
                     {
                         // Change Application state to intialize state
@@ -286,9 +271,12 @@ namespace LibraryManagement.ViewModels
                     finally
                     {
                         // Clear UI
-                        BillReturn = new BillReturn { sumFine = 0 };
-                        DateReturn = DateTime.Now;
                         RetrieveDetailBorrow();
+                        BillReturn = new BillReturn();
+                        BillReturn.idReader = readerSelected.idReader;
+                        BillReturn.sumFine = 0;
+                        DateReturn = DateTime.Now;
+                      
                         ListDetailBorrowSelected = new ObservableCollection<DetailBillBorrow>();
                         if (!String.IsNullOrEmpty(lstBook))
                         MessageBox.Show($"Gia hạn sách thành công ! {lstBook} đá quá thời gian mượn sách, vui lòng trả sách ");

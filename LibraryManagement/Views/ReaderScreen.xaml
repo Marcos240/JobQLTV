@@ -72,7 +72,7 @@
                                 <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"></GridViewColumn>
                                 <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding addressReader}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày tạo thẻ" DisplayMemberBinding="{Binding createdAt,StringFormat='dd/MM/yyyy'}"></GridViewColumn>
-                                <GridViewColumn Header="Số nợ" DisplayMemberBinding="{Binding debt}"></GridViewColumn>
+                                <GridViewColumn Header="Số nợ" DisplayMemberBinding="{Binding debt,  StringFormat={}{0:#,##0}}"></GridViewColumn>
                                 <GridViewColumn Header="Loại người đọc" DisplayMemberBinding="{Binding TypeReader.nameTypeReader}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
@@ -222,10 +222,8 @@
                             </Style>
                         </TextBox.Resources>
                         <TextBox.Text>
-                            <Binding Path="SelectedItem.debt" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <vm:ReaderDebtValidation/>
-                                </Binding.ValidationRules>
+                            <Binding Path="SelectedItem.debt"   StringFormat="{}{0:#,##0}" UpdateSourceTrigger="PropertyChanged">
+                                
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
