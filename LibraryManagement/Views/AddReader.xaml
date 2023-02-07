@@ -16,7 +16,7 @@
         ShowInTaskbar="False"
         ResizeMode="NoResize"
         Loaded="Window_Loaded"
-        Title="Thêm độc giả" Height="500" Width="500">
+        Title="Thêm độc giả" Height="700" Width="500">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Unloaded">
             <i:InvokeCommandAction Command="{Binding CancelAddCommand}"/>
@@ -45,16 +45,19 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Content="Họ tên" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
-                            <Label Grid.Row="1" Content="Ngày sinh" Background="{x:Null}"  FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
-                            <Label Grid.Row="2" Content="Email" Background="{x:Null}"  FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
-                            <Label Grid.Row="3" Content="Địa chỉ"  Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
-                            <Label Grid.Row="4" Content="Ngày lập thẻ" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
-                            <Label Grid.Row="5" Content="Loại độc giả" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="1" Content="Mã HSSV" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="2" Content="Ngày sinh" Background="{x:Null}"  FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="3" Content="Email" Background="{x:Null}"  FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="4" Content="Địa chỉ"  Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="5" Content="Ngày lập thẻ" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
+                            <Label Grid.Row="6" Content="Loại độc giả" Background="{x:Null}" FontSize="18" Foreground="Black" VerticalContentAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Column="1" Margin="10">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
@@ -76,7 +79,19 @@
                                     </Style>
                                 </TextBox.Resources>
                             </TextBox>
-                            <DatePicker Foreground="Black" x:Name="DobReader"  Grid.Row="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                            <TextBox Foreground="Black" x:Name="CardID" BorderThickness="1" Grid.Row="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                                <TextBox.Text>
+                                    <Binding Path="CardID" UpdateSourceTrigger="PropertyChanged" >
+                                        
+                                    </Binding>
+                                </TextBox.Text>
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            <DatePicker Foreground="Black" x:Name="DobReader"  Grid.Row="2" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
                                 <DatePicker.SelectedDate>
                                     <Binding Path="DobReader" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -85,7 +100,7 @@
                                     </Binding>
                                 </DatePicker.SelectedDate>
                             </DatePicker>
-                            <TextBox Foreground="Black" x:Name="Email" Grid.Row="2" BorderThickness="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                            <TextBox Foreground="Black" x:Name="Email" Grid.Row="3" BorderThickness="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
                                 <TextBox.Text>
                                     <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" >
                                         <Binding.ValidationRules>
@@ -99,7 +114,7 @@
                                     </Style>
                                 </TextBox.Resources>
                             </TextBox>
-                            <TextBox Foreground="Black" x:Name="Address" Grid.Row="3" BorderThickness="1"  Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16" >
+                            <TextBox Foreground="Black" x:Name="Address" Grid.Row="4" BorderThickness="1"  Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16" >
                                 <TextBox.Text>
                                     <Binding Path="AddressReader" UpdateSourceTrigger="PropertyChanged" >
                                         <Binding.ValidationRules>
@@ -113,21 +128,20 @@
                                     </Style>
                                 </TextBox.Resources>
                             </TextBox>
-                            <TextBox IsReadOnly="True" Foreground="Black" x:Name="CreateAt" Grid.Row="4" Text="{Binding CreatedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=dd/MM/yyyy}" BorderThickness="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
+                            <TextBox IsReadOnly="True" Foreground="Black" x:Name="CreateAt" Grid.Row="5" Text="{Binding CreatedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=dd/MM/yyyy}" BorderThickness="1" Height="Auto" Margin="5" VerticalContentAlignment="Center" Padding="5 0" FontSize="16">
                                 <TextBox.Resources>
                                     <Style TargetType="{x:Type Border}">
                                         <Setter Property="CornerRadius" Value="10"/>
                                     </Style>
                                 </TextBox.Resources>
                             </TextBox>
-                            <ComboBox Foreground="Black" Name="cbTypeReader" Grid.Row="5" Grid.Column="1" Margin="10" FontSize="16" Height="Auto" VerticalContentAlignment="Center" Padding="5 0" DisplayMemberPath="nameTypeReader" ItemsSource="{Binding TypeReader}" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox Foreground="Black" Name="cbTypeReader" Grid.Row="6" Grid.Column="1" Margin="10" FontSize="16" Height="Auto" VerticalContentAlignment="Center" Padding="5 0" DisplayMemberPath="nameTypeReader" ItemsSource="{Binding TypeReader}" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="SelectedTypeReader" UpdateSourceTrigger="PropertyChanged">
                                     </Binding>
                                 </ComboBox.SelectedItem>
                             </ComboBox>
                         </Grid>
-
                     </Grid>
                 </ScrollViewer>
             </materialDesign:Card>

@@ -44,6 +44,7 @@ namespace LibraryManagement.Views
             SaveReader.Visibility = Visibility.Visible;
             UpdateReader.Visibility = Visibility.Hidden;
             NameReader.IsReadOnly = false;
+            CardID.IsReadOnly = false;
             Address.IsReadOnly = false;
             Email.IsReadOnly = false;
             DobReader.IsEnabled = true;
@@ -66,6 +67,7 @@ namespace LibraryManagement.Views
             SaveReader.Visibility = Visibility.Hidden;
             UpdateReader.Visibility = Visibility.Visible;
             NameReader.IsReadOnly = true;
+            CardID.IsReadOnly = true;
             Address.IsReadOnly = true;
             Email.IsReadOnly = true;
             DobReader.IsEnabled = false;
@@ -98,6 +100,7 @@ namespace LibraryManagement.Views
             SaveReader.Visibility = Visibility.Hidden;
             UpdateReader.Visibility = Visibility.Visible;
             NameReader.IsReadOnly = true;
+            CardID.IsReadOnly = true;
             Address.IsReadOnly = true;
             Email.IsReadOnly = true;
             DobReader.IsEnabled = false;

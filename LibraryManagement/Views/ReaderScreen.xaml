@@ -68,6 +68,7 @@
                             <GridView>
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding idReader }"></GridViewColumn>
                                 <GridViewColumn Header="Họ tên" DisplayMemberBinding="{Binding nameReader}"></GridViewColumn>
+                                <GridViewColumn Header="Mã HSSV" DisplayMemberBinding="{Binding cardID }"></GridViewColumn>
                                 <GridViewColumn Header="Ngày sinh" DisplayMemberBinding="{Binding dobReader}"></GridViewColumn>
                                 <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"></GridViewColumn>
                                 <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding addressReader}"></GridViewColumn>
@@ -125,15 +126,18 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <Label Foreground="Black" Grid.Row="0" Content="Họ tên" Background="{x:Null}" FontSize="18" VerticalAlignment="Center"/>
-                        <Label Foreground="Black" Grid.Row="1" Content="Địa chỉ" Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
-                        <Label Foreground="Black" Grid.Row="2" Content="Email" Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
-                        <Label Foreground="Black" Grid.Row="3" Content="Ngày sinh"  Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
-                        <Label Foreground="Black" Grid.Row="4" Content="Ngày lập thẻ" Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
+                        <Label Foreground="Black" Grid.Row="1" Content="Mã HSSV" Background="{x:Null}" FontSize="18" VerticalAlignment="Center"/>
+                        <Label Foreground="Black" Grid.Row="2" Content="Địa chỉ" Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
+                        <Label Foreground="Black" Grid.Row="3" Content="Email" Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
+                        <Label Foreground="Black" Grid.Row="4" Content="Ngày sinh"  Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
+                        <Label Foreground="Black" Grid.Row="5" Content="Ngày lập thẻ" Background="{x:Null}"  FontSize="18" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="2">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -154,7 +158,19 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Padding="5 0" Foreground="Black" x:Name="Address" IsReadOnly="True" Grid.Row="1" BorderThickness="1" VerticalAlignment="Center"  FontSize="14">
+                        <TextBox Foreground="Black" x:Name="CardID" IsReadOnly="True" Grid.Row="1" BorderThickness="1" VerticalAlignment="Center" FontSize="14" Padding="5 0">
+                            <TextBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </TextBox.Resources>
+                            <TextBox.Text>
+                                <Binding Path="SelectedItem.cardID" UpdateSourceTrigger="PropertyChanged">
+
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox Padding="5 0" Foreground="Black" x:Name="Address" IsReadOnly="True" Grid.Row="2" BorderThickness="1" VerticalAlignment="Center"  FontSize="14">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="10"/>
@@ -168,7 +184,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Padding="5 0" Foreground="Black" x:Name="Email" IsReadOnly="True" Grid.Row="2" BorderThickness="1" VerticalAlignment="Center" FontSize="14">
+                        <TextBox Padding="5 0" Foreground="Black" x:Name="Email" IsReadOnly="True" Grid.Row="3" BorderThickness="1" VerticalAlignment="Center" FontSize="14">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="10"/>
@@ -182,7 +198,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <DatePicker  Foreground="Black" x:Name="DobReader" IsEnabled="False" Grid.Row="3" BorderThickness="1" VerticalAlignment="Center" Padding="5 0" Margin="1" FontSize="14">
+                        <DatePicker  Foreground="Black" x:Name="DobReader" IsEnabled="False" Grid.Row="4" BorderThickness="1" VerticalAlignment="Center" Padding="5 0" Margin="1" FontSize="14">
                             <DatePicker.SelectedDate>
                                 <Binding Path="SelectedItem.dobReader" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -191,8 +207,7 @@
                                 </Binding>
                             </DatePicker.SelectedDate>
                         </DatePicker>
-                        <DatePicker Foreground="Black" x:Name="CreatAt" IsEnabled="False" Grid.Row="4" BorderThickness="1" VerticalAlignment="Center" Padding="5 0" Margin="1" FontSize="14" SelectedDate="{Binding SelectedItem.createdAt,  UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyyy'}"/>
-
+                        <DatePicker Foreground="Black" x:Name="CreatAt" IsEnabled="False" Grid.Row="5" BorderThickness="1" VerticalAlignment="Center" Padding="5 0" Margin="1" FontSize="14" SelectedDate="{Binding SelectedItem.createdAt,  UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyyy'}"/>
                     </Grid>
                 </Grid>
             </materialDesign:Card>

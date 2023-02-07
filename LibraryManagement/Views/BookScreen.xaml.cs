@@ -159,5 +159,11 @@ namespace LibraryManagement.Views
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
+
+        private void ButtonPublisher_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new PublisherScreen();
+            window.ShowDialog();
+        }
     }
 }

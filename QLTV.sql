@@ -79,6 +79,7 @@ CREATE TABLE Reader
 	(
 		idReader INT IDENTITY (1,1) PRIMARY KEY,
 		nameReader NVARCHAR(MAX) NOT NULL,
+		cardID NVARCHAR(mAX) NOT NULL,
 		dobReader SMALLDATETIME NOT NULL,
 		email NVARCHAR(MAX) NOT NULL,
 		addressReader NVARCHAR(MAX) NOT NULL,
@@ -192,10 +193,10 @@ insert into TypeReader values(N'Học sinh')
 insert into TypeReader values(N'Sinh viên')
 insert into TypeReader values(N'Tự do')
 
-insert into Reader values(N'Lê Anh Tuấn', '01/01/2000', 'email1@gmail.com', N'Gia Lai', '01/01/2022', 0, '01/01/2022', 2,'le anh tuan')
-insert into Reader values(N'Lê Xuân Tùng', '01/02/2000', 'email2@gmail.com', N'Quảng Bình', '01/02/2022', 0, '01/02/2022', 1,'le xuan tung')
-insert into Reader values(N'Nguyễn Thanh Tuấn', '01/03/2000', 'email3@gmail.com', N'Quảng Ngãi', '01/03/2022', 0,'01/03/2022', 2,'nguyen thanh tuan')
-insert into Reader values(N'Nguyễn Xuân Tú', '01/04/2000', 'email4@gmail.com', N'Hà Tĩnh', '01/04/2022', 0, '01/04/2022', 3,'nguyen xuan tu')
+insert into Reader values(N'Lê Anh Tuấn','1', '01/01/2000', 'email1@gmail.com', N'Gia Lai', '01/01/2022', 0, '01/01/2022', 2,'le anh tuan')
+insert into Reader values(N'Lê Xuân Tùng','2', '01/02/2000', 'email2@gmail.com', N'Quảng Bình', '01/02/2022', 0, '01/02/2022', 1,'le xuan tung')
+insert into Reader values(N'Nguyễn Thanh Tuấn','3', '01/03/2000', 'email3@gmail.com', N'Quảng Ngãi', '01/03/2022', 0,'01/03/2022', 2,'nguyen thanh tuan')
+insert into Reader values(N'Nguyễn Xuân Tú','4', '01/04/2000', 'email4@gmail.com', N'Hà Tĩnh', '01/04/2022', 0, '01/04/2022', 3,'nguyen xuan tu')
 
 
 insert into Publisher values(N'Nhà xuất bản 1')

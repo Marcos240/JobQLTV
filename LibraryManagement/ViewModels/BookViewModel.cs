@@ -202,7 +202,8 @@ namespace LibraryManagement.ViewModels
             });
 
             AddBookCommand = new AppCommand<object>((p) => 
-            { 
+            {
+                publisher = new ObservableCollection<Publisher>(DataAdapter.Instance.DB.Publishers);
                 return true; 
             }, (p) => 
             { 

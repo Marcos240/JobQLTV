@@ -178,6 +178,7 @@
     <Compile Include="ViewModels\Paginations\LatestBookPaginationCollection.cs" />
     <Compile Include="ViewModels\Paginations\PaginatingCollection.cs" />
     <Compile Include="ViewModels\Paginations\ReaderPaginatingCollection.cs" />
+    <Compile Include="ViewModels\PublisherViewModel.cs" />
     <Compile Include="ViewModels\Validations\BookValidations\AuthorNameValidation.cs" />
     <Compile Include="ViewModels\Validations\BookValidations\BookNameValidation.cs" />
     <Compile Include="ViewModels\Validations\BookValidations\CategoryNameValidation.cs" />
@@ -220,6 +221,9 @@
     <Compile Include="ViewModels\Validations\StaffValidation\PhoneNumerValidation.cs" />
     <Compile Include="ViewModels\Validations\StaffValidation\PasswordValidation.cs" />
     <Compile Include="ViewModels\Validations\StaffValidation\UserNameValidation.cs" />
+    <Compile Include="Views\AddPublisherScreen.xaml.cs">
+      <DependentUpon>AddPublisherScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddStaff.xaml.cs">
       <DependentUpon>AddStaff.xaml</DependentUpon>
     </Compile>
@@ -258,6 +262,9 @@
     </Compile>
     <Compile Include="Views\HomeScreen.xaml.cs">
       <DependentUpon>HomeScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PublisherScreen.xaml.cs">
+      <DependentUpon>PublisherScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReaderScreen.xaml.cs">
       <DependentUpon>ReaderScreen.xaml</DependentUpon>
@@ -300,6 +307,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddPublisherScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddStaff.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -345,6 +356,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomeScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PublisherScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

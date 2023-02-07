@@ -32,6 +32,7 @@ namespace LibraryManagement.Models
         public System.DateTime latestExtended { get; set; }
         public int idTypeReader { get; set; }
         public string nameReaderSearch { get; set; }
+        public string cardID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillBorrow> BillBorrows { get; set; }

@@ -42,6 +42,7 @@ namespace LibraryManagement.ViewModels
                 OnPropertyChanged();
                 if (SelectedItem != null)
                 {
+                    CardID = SelectedItem.cardID;
                     IdReader = SelectedItem.idReader;
                     NameReader = SelectedItem.nameReader;
                     DobReader = SelectedItem.dobReader;
@@ -57,6 +58,8 @@ namespace LibraryManagement.ViewModels
         }
         private TypeReader _SelectedTypeReader;
         public TypeReader SelectedTypeReader { get => _SelectedTypeReader; set { _SelectedTypeReader = value; OnPropertyChanged(); } }
+        private String _cardID;
+        public string CardID { get => _cardID; set { _cardID = value; OnPropertyChanged(); } }
 
         private int _idReader;
         public int IdReader { get => _idReader; set { _idReader = value; OnPropertyChanged(); } }
@@ -140,6 +143,7 @@ namespace LibraryManagement.ViewModels
 
             }, (p) =>
             {
+                SelectedItem.cardID = CardID;
                 SelectedItem.nameReader = NameReader;
                 SelectedItem.dobReader = (DateTime)DobReader;
                 SelectedItem.email = Email;
@@ -163,7 +167,7 @@ namespace LibraryManagement.ViewModels
             });
             AddCommand = new AppCommand<object>((p) =>
             {
-                if (NameReader == null || Email == null || AddressReader == null )
+                if (NameReader == null|| CardID == null || Email == null || AddressReader == null )
                     return false;
                 return true;
 
@@ -174,6 +178,7 @@ namespace LibraryManagement.ViewModels
                     var Reader = new Reader()
                     {
                         nameReader = NameReader,
+                        cardID = CardID,
                         dobReader = (DateTime)DobReader,
                         email = Email,
                         addressReader = AddressReader,
@@ -205,6 +210,7 @@ namespace LibraryManagement.ViewModels
             }, (p) =>
             {
                 var Reader = DataAdapter.Instance.DB.Readers.Where(x => x.idReader == SelectedItem.idReader).SingleOrDefault();
+                Reader.cardID = SelectedItem.cardID;
                 Reader.nameReader = SelectedItem.nameReader;
                 Reader.dobReader = (DateTime)SelectedItem.dobReader;
                 Reader.email = SelectedItem.email;
@@ -297,6 +303,7 @@ namespace LibraryManagement.ViewModels
                     NameReader = null;
                     AddressReader = null;
                     Email = null;
+                    CardID = null;
                     DobReader = new DateTime(2000, 1, 1);
                     CreatedAt = DateTime.Now;
                     Debt = 0;

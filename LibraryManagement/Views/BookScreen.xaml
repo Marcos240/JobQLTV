@@ -242,6 +242,9 @@
                             <Button x:Name="btnAuthors" Click="ButtonAuthor_Click" ToolTip="Thay đổi danh sách tác giả" Background="Transparent" BorderThickness="0" Margin="10 0 0 0" Padding="0" VerticalAlignment="Center"  Grid.Column="0">
                                 <Image Source="/Assets/author.png"/>
                             </Button>
+                            <Button x:Name="btnBrands" Click="ButtonPublisher_Click" ToolTip="Thay đổi danh sách nhà sản xuất" Background="Transparent" BorderThickness="0" Margin="10 0 0 0" Padding="0" VerticalAlignment="Center"  Grid.Column="0">
+                                <Image Source="/Assets/author.png"/>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Grid>

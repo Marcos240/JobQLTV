@@ -16,6 +16,7 @@
     <viewmodel:ParameterViewModel x:Key="ParameterViewModel"/>
     <viewmodel:ReportViewModel x:Key="ReportViewModel"/>
     <viewmodel:AuthorViewModel x:Key="AuthorViewModel"/>
+    <viewmodel:PublisherViewModel x:Key="PublisherViewModel"/>
     <viewmodel:CategoryViewModel x:Key="CategoryViewModel"/>
     <viewmodel:SelectedItemToBoolean x:Key="SelectedItemToBoolean"/>
 
