@@ -207,7 +207,10 @@ namespace LibraryManagement.ViewModels
                 return true; 
             }, (p) => 
             { 
-                AddBookScreen wd = new AddBookScreen(); 
+                AddBookScreen wd = new AddBookScreen();
+                category = new ObservableCollection<Category>(DataAdapter.Instance.DB.Categories);
+                publisher = new ObservableCollection<Publisher>(DataAdapter.Instance.DB.Publishers);
+                author = new ObservableCollection<Author>(DataAdapter.Instance.DB.Authors);
                 nameBook = "";
                 SelectedCategory = null;
                 SelectedPublisher = null;
@@ -652,6 +655,9 @@ namespace LibraryManagement.ViewModels
                 p =>
                 {
                     BookImageCover = GetFullPath(SelectedItem.image);
+                    category = new ObservableCollection<Category>(DataAdapter.Instance.DB.Categories);
+                    publisher = new ObservableCollection<Publisher>(DataAdapter.Instance.DB.Publishers);
+                    author = new ObservableCollection<Author>(DataAdapter.Instance.DB.Authors);
                 });
         }
 
